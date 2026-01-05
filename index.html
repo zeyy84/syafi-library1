@@ -4,47 +4,737 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syafi Library | Perpustakaan Digital Gen Z</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4f46e5; /* Biru lebih solid */
-            --primary-glow: #818cf8;
-            --secondary: #10b981; /* Hijau, bukan pink */
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --glass: rgba(255, 255, 255, 0.85);
-            --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            /* Skema Warna Terang (Default) - Cerah dan Bersih */
+            --primary: #4361ee; /* Biru cerah dan modern */
+            --secondary: #7209b7; /* Ungu yang enerjik */
+            --accent: #f72585; /* Magenta untuk aksen */
+            --background: #ffffff;
+            --surface: #f8f9fa; /* Abu-abu sangat muda untuk kartu */
+            --text: #212529;
+            --text-light: #6c757d;
+            --success: #4cc9f0;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --glass: rgba(255, 255, 255, 0.92);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 20px;
+            --radius-sm: 12px;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Skema Warna Gelap (Dark Mode) */
+        [data-theme="dark"] {
+            --primary: #4895ef; /* Biru yang lebih lembut di dark mode */
+            --secondary: #b5179e;
+            --accent: #f72585;
+            --background: #121212; /* Hitam pekat, bukan abu-abu */
+            --surface: #1e1e1e; /* Permukaan lebih terang dari background */
+            --text: #e9ecef;
+            --text-light: #adb5bd;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --glass: rgba(30, 30, 30, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            /* GRADIENT BARU: Biru sangat muda ke hijau sangat muda */
-            background: linear-gradient(135deg, #e3f2fd 0%, #f0f9ff 100%);
-            /* Opsi Alternatif 1: Ungu muda ke biru muda */
-            /* background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); */
-            /* Opsi Alternatif 2: Netral */
-            /* background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%); */
-            color: var(--dark);
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            transition: var(--transition);
             line-height: 1.6;
             min-height: 100vh;
-            background-attachment: fixed; /* Biar gradient tetap saat scroll */
+            overflow-x: hidden;
         }
-        /* ... (Kode CSS lainnya untuk header, kartu buku, dll TETAP SAMA seperti sebelumnya) ... */
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--glass);
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] header {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .theme-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, 
+                rgba(67, 97, 238, 0.08) 0%, 
+                rgba(114, 9, 183, 0.04) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Container & Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .section-title i {
+            margin-right: 0.8rem;
+            color: var(--primary);
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .book-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] .book-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .book-card:hover .book-cover {
+            transform: scale(1.05);
+        }
+
+        .book-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .book-category {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+
+        .book-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .book-author {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .book-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
         .book-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.8rem;
             margin-top: auto;
-            flex-wrap: wrap; /* Agar tombol rapi di mobile */
         }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
         .btn-read {
-            background: linear-gradient(to right, var(--primary), var(--primary-glow));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
         }
+
         .btn-read:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Quotes Section */
+        .quotes-container {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius);
+            padding: 3rem;
+            color: white;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quotes-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .new-quote-btn {
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .new-quote-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Wall of Messages */
+        .wall-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .message-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .message-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .message-text {
+            margin-bottom: 1rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .message-author {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .message-form {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            background: var(--background);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .form-control {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 3rem;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface);
+            color: var(--text);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .footer-section a {
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--background);
+            border-radius: 50%;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        [data-theme="dark"] .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Modal untuk membaca buku */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--background);
+            border-radius: var(--radius);
+            width: 90%;
+            height: 85%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--surface);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .modal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .modal-header h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .quotes-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .book-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animasi tambahan */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
         }
     </style>
 </head>
@@ -52,21 +742,31 @@
     <!-- Header & Navigation -->
     <header>
         <div class="nav-container">
-            <div class="logo"><i class="fas fa-book-open"></i> Syafi Library</div>
+            <div class="logo">
+                <i class="fas fa-book-open floating"></i> Syafi Library
+            </div>
             <nav class="nav-links">
                 <a href="#home" class="active">Beranda</a>
                 <a href="#books">Koleksi Buku</a>
-                <a href="#quotes">Kutipan</a>
-                <a href="#wall">Kata Teman</a>
+                <a href="#quotes">Kutipan Inspirasi</a>
+                <a href="#wall">Wall of Messages</a>
             </nav>
+            <button id="themeToggle" class="theme-btn" aria-label="Ganti tema terang/gelap">
+                <i class="fas fa-moon"></i> Mode Gelap
+            </button>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <h1>Baca Buku. Berbagi Inspirasi.</h1>
-        <p>Tempat nongkrong digital buat gen Z yang suka baca, diskusi, dan berkembang bareng.</p>
+        <p>Tempat nongkrong digital buat Gen Z yang suka baca, diskusi, dan berkembang bareng. Temukan buku favoritmu dan bagikan kata-kata inspirasimu!</p>
+        <a href="#books" class="btn btn-read" style="display:inline-flex; max-width:200px; margin:0 auto;">
+            <i class="fas fa-book"></i> Jelajahi Buku
+        </a>
     </section>
 
+    <!-- Books Section -->
     <section class="container" id="books">
         <h2 class="section-title"><i class="fas fa-books"></i> Koleksi Buku</h2>
         <div class="books-grid" id="booksGrid">
@@ -74,44 +774,222 @@
         </div>
     </section>
 
-    <!-- ... (Bagian Kutipan, Wall of Messages, Admin Panel, Footer TETAP SAMA) ... -->
+    <!-- Quotes Section -->
+    <section class="container" id="quotes">
+        <h2 class="section-title"><i class="fas fa-quote-left"></i> Kutipan Inspirasi</h2>
+        <div class="quotes-container">
+            <div class="quote-text" id="quoteText">
+                "Membaca adalah jendela dunia. Dengan membaca, kita bisa menjelajahi tempat-tempat yang tak pernah kita kunjungi."
+            </div>
+            <div class="quote-author" id="quoteAuthor">- Anonim</div>
+            <button class="new-quote-btn" id="newQuoteBtn">
+                <i class="fas fa-random"></i> Kutipan Lainnya
+            </button>
+        </div>
+    </section>
+
+    <!-- Wall of Messages -->
+    <section class="container" id="wall">
+        <h2 class="section-title"><i class="fas fa-comments"></i> Wall of Messages</h2>
+        <div class="wall-container" id="wallContainer">
+            <!-- Pesan akan diisi oleh JavaScript -->
+        </div>
+        
+        <div class="message-form">
+            <h3 style="margin-bottom: 1.5rem; color: var(--text);">Tambahkan Pesanmu</h3>
+            <div class="form-group">
+                <label for="messageText">Pesanmu:</label>
+                <textarea id="messageText" class="form-control" placeholder="Tulis pesan inspiratif atau rekomendasi buku di sini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="messageAuthor">Nama (opsional):</label>
+                <input type="text" id="messageAuthor" class="form-control" placeholder="Nama atau inisial">
+            </div>
+            <button id="submitMessage" class="btn btn-read" style="width:100%;">
+                <i class="fas fa-paper-plane"></i> Kirim Pesan
+            </button>
+        </div>
+    </section>
+
+    <!-- Admin Panel (Sederhana) -->
+    <section class="container" id="admin">
+        <div class="admin-panel">
+            <div class="admin-header">
+                <h3 style="color: var(--text);">Tambah Kutipan Baru</h3>
+            </div>
+            <div class="form-group">
+                <label for="newQuote">Kutipan Baru:</label>
+                <textarea id="newQuote" class="form-control" placeholder="Masukkan kutipan inspiratif..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="quoteAuthorInput">Penulis Kutipan:</label>
+                <input type="text" id="quoteAuthorInput" class="form-control" placeholder="Nama penulis">
+            </div>
+            <button id="addQuoteBtn" class="btn btn-outline" style="width:100%;">
+                <i class="fas fa-plus"></i> Tambah Kutipan
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Syafi Library</h3>
+                <p>Perpustakaan digital modern untuk Gen Z Indonesia. Tempat menemukan inspirasi, berbagi bacaan, dan membangun komunitas pembaca.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Platform Legal</h3>
+                <p>Untuk buku-buku populer berhak cipta, kami mendukung platform legal seperti:</p>
+                <p><a href="https://www.ipusnas.id/" target="_blank"><i class="fas fa-external-link-alt"></i> iPusnas</a></p>
+                <p><a href="https://play.google.com/books" target="_blank"><i class="fas fa-external-link-alt"></i> Google Books</a></p>
+                <p><a href="https://www.gramedia.com/" target="_blank"><i class="fas fa-external-link-alt"></i> Gramedia Digital</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Kontak</h3>
+                <p><i class="fas fa-envelope"></i> hello@syaflibrary.id</p>
+                <p><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">Website ini dibuat untuk tujuan edukasi dan non-komersial.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Syafi Library. Dibuat dengan <i class="fas fa-heart" style="color: var(--accent);"></i> untuk komunitas pembaca Gen Z.
+        </div>
+    </footer>
+
+    <!-- Modal untuk membaca buku -->
+    <div id="bookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Membaca Buku</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="bookFrame" src="" title="Buku"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // ========== DATA BUKU AWAL YANG BISA DIBACA ==========
+        // ========== DARK MODE TOGGLE ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Cek preferensi pengguna
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme') || (prefersDark.matches ? 'dark' : 'light');
+
+        // Terapkan tema
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleButton(currentTheme);
+
+        // Fungsi toggle
+        themeToggle.addEventListener('click', () => {
+            const theme = document.documentElement.getAttribute('data-theme');
+            const newTheme = theme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleButton(newTheme);
+        });
+
+        function updateToggleButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Mode Terang';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Mode Gelap';
+            }
+        }
+
+        // ========== DATA BUKU ==========
         const initialBooks = [
             {
                 title: "Atomic Habits",
                 author: "James Clear",
-                category: "Self Motivation",
-                cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop",
-                description: "Perubahan kecil yang memberikan hasil luar biasa.",
-                // LINK BACA: Ganti dengan link menuju platform resmi (contoh: Google Books preview)
+                category: "Pengembangan Diri",
+                cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop&q=80",
+                description: "Perubahan kecil yang memberikan hasil luar biasa. Buku ini mengajarkan cara membangun kebiasaan baik dan menghilangkan kebiasaan buruk.",
                 readLink: "https://books.google.co.id/books/about/Atomic_Habits.html?id=oX5DEAAAQBAJ&source=kp_book_description&redir_esc=y",
-                linkType: "external" // Tipe link: 'external' atau 'embed'
+                linkType: "external",
+                source: "Google Books Preview"
             },
             {
                 title: "Laskar Pelangi",
                 author: "Andrea Hirata",
                 category: "Novel Indonesia",
-                cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop",
-                description: "Kisah inspiratif anak-anak Belitung.",
-                // LINK BACA: Contoh menuju iPusnas atau toko buku online
-                readLink: "#", // Ganti dengan link sebenarnya
-                linkType: "external"
+                cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop&q=80",
+                description: "Kisah inspiratif anak-anak Belitung yang berjuang untuk pendidikan. Novel yang menyentuh hati tentang persahabatan dan mimpi.",
+                readLink: "https://www.ipusnas.id/",
+                linkType: "external",
+                source: "iPusnas"
             },
             {
-                title: "Buku Kumpulan Puisi (Contoh Domain Publik)",
-                author: "Anonim",
-                category: "Sastra",
-                cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop",
-                description: "Kumpulan puisi klasik bahasa Indonesia.",
-                // LINK BACA: Contoh embed PDF dari Archive.org
-                readLink: "https://archive.org/embed/kumpulan-berbagai-buku",
-                linkType: "embed"
+                title: "Bumi Manusia",
+                author: "Pramoedya Ananta Toer",
+                category: "Sastra Klasik",
+                cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w-400&h=600&fit=crop&q=80",
+                description: "Novel sejarah yang menggambarkan pergulatan manusia pada masa kolonial Belanda. Karya masterpiece sastra Indonesia.",
+                readLink: "#",
+                linkType: "external",
+                source: "Tersedia di toko buku"
+            },
+            {
+                title: "Filosofi Teras",
+                author: "Henry Manampiring",
+                category: "Filsafat",
+                cover: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&h=600&fit=crop&q=80",
+                description: "Filsafat Stoa Yunani Kuno untuk kehidupan modern. Buku yang mengajarkan ketenangan menghadapi masalah sehari-hari.",
+                readLink: "#",
+                linkType: "external",
+                source: "Tersedia di Gramedia"
+            },
+            {
+                title: "The Alchemist",
+                author: "Paulo Coelho",
+                category: "Fiksi Inspiratif",
+                cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop&q=80",
+                description: "Perjalanan spiritual seorang gembala mencari harta karun. Novel tentang mengikuti mimpi dan takdir hidup.",
+                readLink: "https://archive.org/details/the-alchemist-paulo-coelho/mode/2up",
+                linkType: "embed",
+                source: "Internet Archive"
+            },
+            {
+                title: "Mindset: The New Psychology of Success",
+                author: "Carol S. Dweck",
+                category: "Psikologi",
+                cover: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&h=600&fit=crop&q=80",
+                description: "Mengubah pola pikir tetap menjadi pola pikir berkembang untuk meraih kesuksesan dalam berbagai aspek kehidupan.",
+                readLink: "https://books.google.co.id/books/about/Mindset.html?id=TT-5DwAAQBAJ&redir_esc=y",
+                linkType: "external",
+                source: "Google Books Preview"
             }
         ];
 
-        // ========== FUNGSI RENDER BUKU DENGAN TOMBOL BACA ==========
+        // ========== KUTIPAN INSPIRASI ==========
+        let quotes = [
+            { text: "Membaca adalah jendela dunia. Dengan membaca, kita bisa menjelajahi tempat-tempat yang tak pernah kita kunjungi.", author: "Anonim" },
+            { text: "Buku adalah teman yang paling tenang dan setia; buku adalah penasihat yang paling mudah diakses dan bijaksana.", author: "Charles W. Eliot" },
+            { text: "Orang yang tidak membaca buku sama buruknya dengan mereka yang tidak bisa membaca buku.", author: "Mark Twain" },
+            { text: "Semakin banyak yang Anda baca, semakin banyak hal yang akan Anda ketahui. Semakin banyak yang Anda pelajari, semakin banyak tempat yang akan Anda kunjungi.", author: "Dr. Seuss" },
+            { text: "Buku adalah pesawat, kereta api, dan jalan raya. Mereka adalah tujuan dan perjalanan. Mereka adalah rumah.", author: "Anna Quindlen" }
+        ];
+
+        // ========== WALL OF MESSAGES ==========
+        let messages = [
+            { text: "Baru saja baca Atomic Habits, mindblowing banget! Rekomendasi buat yang pengen improve diri.", author: "Rara" },
+            { text: "Ada yang punya rekomendasi novel Indonesia selain Laskar Pelangi?", author: "Bayu" },
+            { text: "Buku self-improvement apa yang paling ngefek buat kalian?", author: "Salsa" }
+        ];
+
+        // ========== FUNGSI RENDER BUKU ==========
         function renderBooks() {
             const grid = document.getElementById('booksGrid');
             grid.innerHTML = initialBooks.map(book => `
@@ -123,58 +1001,197 @@
                         <p class="book-author">${book.author}</p>
                         <p class="book-description">${book.description}</p>
                         <div class="book-actions">
-                            <!-- TOMBOL BACA UTAMA -->
-                            <button class="btn btn-read" onclick="openBook('${book.readLink}', '${book.linkType}', '${book.title}')">
-                                <i class="fas fa-book-open"></i> Baca Sekarang
+                            <button class="btn btn-read" onclick="openBook('${book.readLink}', '${book.linkType}', '${book.title}', '${book.source}')">
+                                <i class="fas fa-book-open"></i> Baca
                             </button>
                             <button class="btn btn-outline" onclick="addToFavorites('${book.title}')">
                                 <i class="far fa-heart"></i> Favorit
                             </button>
                         </div>
+                        <small style="color: var(--text-light); margin-top: 0.5rem; font-size: 0.8rem;">
+                            <i class="fas fa-info-circle"></i> Sumber: ${book.source}
+                        </small>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ========== FUNGSI UNTUK MEMBUKA BUKU ==========
-        function openBook(link, type, title) {
+        // ========== FUNGSI BUKA BUKU ==========
+        function openBook(link, type, title, source) {
             if (!link || link === '#') {
-                alert(`Fitur membaca untuk "${title}" sedang disiapkan. Untuk sementara, cari buku ini di iPusnas atau Google Books ya!`);
+                alert(`📚 "${title}"\n\nUntuk membaca buku ini, kunjungi platform legal seperti:\n• iPusnas (perpustakaan digital nasional)\n• Google Books\n• Gramedia Digital\n\nMendukung penulis dengan membeli atau meminjam legal!`);
                 return;
             }
 
+            const modal = document.getElementById('bookModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const bookFrame = document.getElementById('bookFrame');
+
+            modalTitle.textContent = `Membaca: ${title} (via ${source})`;
+            
             if (type === 'embed') {
-                // Membuka modal untuk menampilkan embed (PDF/Web Viewer)
-                openBookModal(link, title);
+                bookFrame.src = link;
             } else {
-                // Membuka link eksternal di tab baru
+                // Untuk link eksternal, kita bisa embed atau buka tab baru
+                // Di sini kita akan buka tab baru untuk eksternal
                 window.open(link, '_blank');
+                return;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        // ========== FUNGSI KUTIPAN ==========
+        function displayRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            
+            document.getElementById('quoteText').textContent = `"${quote.text}"`;
+            document.getElementById('quoteAuthor').textContent = `- ${quote.author}`;
+        }
+
+        // ========== FUNGSI WALL OF MESSAGES ==========
+        function renderMessages() {
+            const wallContainer = document.getElementById('wallContainer');
+            wallContainer.innerHTML = messages.map(msg => `
+                <div class="message-card">
+                    <p class="message-text">"${msg.text}"</p>
+                    <p class="message-author">- ${msg.author}</p>
+                </div>
+            `).join('');
+        }
+
+        // ========== FUNGSI TAMBAH KE FAVORIT ==========
+        function addToFavorites(bookTitle) {
+            // Simpan ke localStorage
+            let favorites = JSON.parse(localStorage.getItem('bookFavorites')) || [];
+            
+            if (!favorites.includes(bookTitle)) {
+                favorites.push(bookTitle);
+                localStorage.setItem('bookFavorites', JSON.stringify(favorites));
+                
+                // Feedback visual
+                const buttons = document.querySelectorAll('.btn-outline');
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes(bookTitle) || btn.closest('.book-card')?.querySelector('.book-title')?.textContent === bookTitle) {
+                        btn.innerHTML = '<i class="fas fa-heart"></i> Difavoritkan!';
+                        btn.style.backgroundColor = 'rgba(244, 67, 54, 0.1)';
+                        btn.style.color = '#f44336';
+                        btn.style.borderColor = '#f44336';
+                    }
+                });
+                
+                alert(`"${bookTitle}" telah ditambahkan ke favorit!`);
+            } else {
+                alert(`"${bookTitle}" sudah ada di favoritmu!`);
             }
         }
 
-        function openBookModal(embedLink, title) {
-            // Kode untuk membuat modal sederhana dan menampilkan iframe
-            const modalHTML = `
-                <div id="bookModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; justify-content:center; align-items:center;">
-                    <div style="background:white; border-radius:15px; width:90%; height:80%; padding:20px; display:flex; flex-direction:column;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                            <h3 style="margin:0;">Membaca: ${title}</h3>
-                            <button onclick="document.getElementById('bookModal').remove()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
-                        </div>
-                        <iframe src="${embedLink}" style="width:100%; height:100%; border:none; border-radius:10px;" title="${title}"></iframe>
-                    </div>
-                </div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
-        }
+        // ========== EVENT LISTENERS ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inisialisasi
+            renderBooks();
+            displayRandomQuote();
+            renderMessages();
+            
+            // New Quote Button
+            document.getElementById('newQuoteBtn').addEventListener('click', displayRandomQuote);
+            
+            // Submit Message
+            document.getElementById('submitMessage').addEventListener('click', () => {
+                const messageText = document.getElementById('messageText').value.trim();
+                const messageAuthor = document.getElementById('messageAuthor').value.trim() || 'Anonim';
+                
+                if (messageText) {
+                    messages.unshift({ text: messageText, author: messageAuthor });
+                    renderMessages();
+                    
+                    // Simpan ke localStorage
+                    localStorage.setItem('wallMessages', JSON.stringify(messages));
+                    
+                    // Reset form
+                    document.getElementById('messageText').value = '';
+                    document.getElementById('messageAuthor').value = '';
+                    
+                    alert('Pesanmu telah ditambahkan! Terima kasih sudah berbagi.');
+                } else {
+                    alert('Silakan tulis pesan terlebih dahulu!');
+                }
+            });
+            
+            // Add Quote Button
+            document.getElementById('addQuoteBtn').addEventListener('click', () => {
+                const newQuote = document.getElementById('newQuote').value.trim();
+                const quoteAuthor = document.getElementById('quoteAuthorInput').value.trim() || 'Anonim';
+                
+                if (newQuote) {
+                    quotes.push({ text: newQuote, author: quoteAuthor });
+                    
+                    // Simpan ke localStorage
+                    localStorage.setItem('quotes', JSON.stringify(quotes));
+                    
+                    // Reset form
+                    document.getElementById('newQuote').value = '';
+                    document.getElementById('quoteAuthorInput').value = '';
+                    
+                    alert('Kutipan baru telah ditambahkan!');
+                } else {
+                    alert('Silakan tulis kutipan terlebih dahulu!');
+                }
+            });
+            
+            // Close Modal
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('bookModal').style.display = 'none';
+                document.getElementById('bookFrame').src = '';
+            });
+            
+            // Close modal ketika klik di luar
+            document.getElementById('bookModal').addEventListener('click', (e) => {
+                if (e.target.id === 'bookModal') {
+                    document.getElementById('bookModal').style.display = 'none';
+                    document.getElementById('bookFrame').src = '';
+                }
+            });
+            
+            // Load data dari localStorage jika ada
+            const savedQuotes = localStorage.getItem('quotes');
+            if (savedQuotes) {
+                quotes = JSON.parse(savedQuotes);
+                displayRandomQuote();
+            }
+            
+            const savedMessages = localStorage.getItem('wallMessages');
+            if (savedMessages) {
+                messages = JSON.parse(savedMessages);
+                renderMessages();
+            }
+            
+            console.log('Syafi Library siap digunakan! 📚✨');
+        });
 
-        // ... (Fungsi Firebase, Kutipan, Wall of Messages, dan Admin Panel TETAP SAMA seperti sebelumnya) ...
-
-        // ========== INISIALISASI ==========
-        window.addEventListener('DOMContentLoaded', () => {
-            renderBooks(); // Buku langsung dirender
-            newQuote();
-            console.log('Syafi Library dengan buku yang bisa dibaca, siap digunakan! 📖');
+        // Smooth scroll untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
