@@ -3,1683 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syafi Library - Perpustakaan Digital Modern</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <title>Syafi Library | Perpustakaan Digital Gen Z</title>
+    <!-- Font & Icons untuk Gen Z -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern CSS Reset & Variables */
         :root {
             --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #10b981;
+            --primary-glow: #818cf8;
+            --secondary: #f472b6;
             --dark: #1e293b;
             --light: #f8fafc;
             --gray: #64748b;
-            --gray-light: #e2e8f0;
             --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --radius: 12px;
-            --radius-lg: 20px;
+            --glass: rgba(255, 255, 255, 0.7);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #f0f4ff, #fdf2f8, #f0f9ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: var(--dark);
             line-height: 1.6;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
-
-        /* Modern Glassmorphism Effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        /* Header & Navigation */
+        /* Header & Nav */
         header {
-            position: fixed;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            position: sticky;
             top: 0;
-            width: 100%;
             z-index: 1000;
-            padding: 1rem 0;
-            transition: var(--transition);
+            padding: 1rem 2rem;
         }
-
-        .header-container {
-            max-width: 1400px;
+        .nav-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
+            background-clip: text;
+            color: transparent;
             display: flex;
-            gap: 2.5rem;
             align-items: center;
+            gap: 10px;
         }
-
         .nav-links a {
-            color: var(--dark);
+            margin-left: 1.5rem;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            position: relative;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
             padding: 0.5rem 0;
-            transition: var(--transition);
+            position: relative;
         }
-
-        .nav-links a::after {
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+        .nav-links a.active::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
             width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
         }
-
-        .user-stats {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .stat-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 50px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            z-index: -1;
-        }
-
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text {
-            color: white;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff, #e0e7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        .search-container {
-            position: relative;
-            max-width: 600px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            padding-left: 3.5rem;
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid transparent;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            font-size: 1.2rem;
-        }
-
-        .hero-image {
-            position: relative;
-        }
-
-        .floating-books {
-            position: relative;
-            height: 500px;
-        }
-
-        .book-3d {
-            position: absolute;
-            width: 200px;
-            height: 300px;
-            border-radius: 8px;
-            transform-style: preserve-3d;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .book-3d:nth-child(1) {
-            top: 50px;
-            left: 50px;
-            transform: rotate(-15deg);
-            z-index: 3;
-        }
-
-        .book-3d:nth-child(2) {
-            top: 100px;
-            left: 200px;
-            transform: rotate(5deg);
-            z-index: 2;
-        }
-
-        .book-3d:nth-child(3) {
-            top: 50px;
-            left: 350px;
-            transform: rotate(20deg);
-            z-index: 1;
-        }
-
-        .book-3d:hover {
-            transform: rotate(0deg) translateY(-20px);
-        }
-
-        /* Categories Section */
-        .categories {
-            padding: 6rem 2rem;
-            background: var(--light);
-        }
-
-        .section-header {
-            text-align: center;
+            padding: 5rem 2rem;
             max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-subtitle {
-            color: var(--primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 1.5rem;
-        }
-
-        .section-description {
-            color: var(--gray);
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        .categories-grid {
-            max-width: 1400px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
         }
-
-        .category-card {
-            background: white;
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            text-align: center;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            border: 1px solid var(--gray-light);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            transform: scaleX(0);
-            transition: var(--transition);
-        }
-
-        .category-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .category-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 2rem;
-        }
-
-        .category-card h3 {
-            font-size: 1.5rem;
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
         }
-
-        .category-card p {
+        .hero p {
+            font-size: 1.2rem;
             color: var(--gray);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .book-count {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
+        /* Container Umum */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
-
-        /* Books Section */
-        .books {
-            padding: 6rem 2rem;
-            background: white;
-        }
-
-        .books-header {
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--light);
-            border: 2px solid var(--gray-light);
-            border-radius: 50px;
-            font-weight: 600;
+        /* Section Title */
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
             color: var(--dark);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-color: transparent;
-        }
-
-        .view-all {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
+            gap: 10px;
         }
-
-        .view-all:hover {
-            gap: 1rem;
-        }
-
+        /* Kartu Buku */
         .books-grid {
-            max-width: 1400px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
+            margin-bottom: 4rem;
         }
-
         .book-card {
-            background: white;
-            border-radius: var(--radius-lg);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--gray-light);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-
         .book-card:hover {
             transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-
-        .book-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .book-image {
+        .book-cover {
             width: 100%;
-            height: 300px;
+            height: 250px;
             object-fit: cover;
-            position: relative;
+            display: block;
         }
-
-        .book-content {
+        .book-info {
             padding: 1.5rem;
         }
-
         .book-category {
             display: inline-block;
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
             padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 0.75rem;
         }
-
         .book-title {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--dark);
             margin-bottom: 0.5rem;
-            line-height: 1.4;
+            color: var(--dark);
         }
-
         .book-author {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 1rem;
         }
-
-        .book-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .rating {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            color: #fbbf24;
-        }
-
         .book-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
             gap: 0.5rem;
         }
-
+        /* Tombol */
         .btn {
-            padding: 0.75rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
-            display: flex;
+            transition: all 0.3s;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 8px;
         }
-
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(to right, var(--primary), var(--primary-glow));
             color: white;
         }
-
         .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
         }
-
-        .btn-secondary {
-            background: var(--light);
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        /* Kutipan Hari Ini */
+        .quote-section {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+            max-width: 900px;
+        }
+        #quoteDisplay {
+            font-size: 1.6rem;
+            font-style: italic;
             color: var(--dark);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            min-height: 80px;
         }
-
-        .btn-secondary:hover {
-            background: var(--gray-light);
-        }
-
-        /* Featured Section */
-        .featured {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .featured-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .featured-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
+        #authorDisplay {
+            color: var(--primary);
             font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .featured h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .featured p {
             font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
         }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 2rem 2rem;
+        /* Wall of Messages */
+        .wall-section {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem auto;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255,255,255,0.3);
+            max-width: 900px;
         }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .footer-section p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: white;
-            padding-left: 0.5rem;
-        }
-
-        .social-links {
+        .message-form {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+        .message-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        .message-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .messages-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
         }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
+        .message {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
         }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
+        .message .text { margin-bottom: 0.5rem; }
+        .message .meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            justify-content: space-between;
         }
-
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         /* Admin Panel */
         .admin-panel {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 30px;
+            right: 30px;
             z-index: 1000;
         }
-
-        .admin-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        #adminToggle {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 600;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+            transition: all 0.3s;
         }
-
-        .admin-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+        #adminToggle:hover {
+            transform: rotate(90deg) scale(1.1);
         }
-
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
             z-index: 2000;
-            padding: 1rem;
-            overflow-y: auto;
+            justify-content: center;
+            align-items: center;
         }
-
         .modal-content {
             background: white;
-            max-width: 800px;
-            margin: 2rem auto;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Admin Panel Tabs */
-        .admin-tabs {
-            display: flex;
-            background: var(--light);
-            border-bottom: 2px solid var(--gray-light);
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--gray);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            background: white;
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .tab-content {
+            border-radius: 20px;
             padding: 2rem;
-            display: none;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
         }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Upload Form */
-        .upload-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
+        .modal-content h2 {
             margin-bottom: 1.5rem;
+            color: var(--dark);
         }
-
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--dark);
         }
-
-        .form-control {
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
             font-size: 1rem;
-            transition: var(--transition);
+            transition: border 0.3s;
         }
-
-        .form-control:focus {
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        /* File Upload */
-        .file-upload-area {
-            border: 2px dashed var(--gray-light);
-            border-radius: var(--radius);
-            padding: 2rem;
+        /* Footer */
+        footer {
             text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--light);
-        }
-
-        .file-upload-area:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .file-upload-area.dragover {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.05);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
+            padding: 2rem;
             color: var(--gray);
-            margin-bottom: 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
-
-        .upload-instruction {
-            color: var(--gray);
-            margin-bottom: 1rem;
-        }
-
-        .file-info {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: white;
-            border-radius: var(--radius);
-            display: none;
-        }
-
-        /* Drive Upload */
-        .drive-upload {
-            background: var(--light);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .drive-steps {
-            margin-top: 1rem;
-            padding-left: 1.5rem;
-        }
-
-        .drive-steps li {
-            margin-bottom: 0.5rem;
-            color: var(--gray);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .featured-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .floating-books {
-                height: 400px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        /* Responsif */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 1rem;
-                box-shadow: var(--shadow);
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .user-stats {
-                display: none;
-            }
-            
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .books-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .filter-buttons {
-                justify-content: center;
-            }
-            
-            .admin-panel {
-                bottom: 1rem;
-                right: 1rem;
-            }
-            
-            .admin-tabs {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-container,
-            .hero-content,
-            .section-header,
-            .categories-grid,
-            .books-grid,
-            .featured-content,
-            .footer-content {
-                padding: 0 1rem;
-            }
-            
-            .category-card,
-            .book-card {
-                padding: 1.5rem;
-            }
-            
-            .hero-text h1 {
-                font-size: 1.75rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .book-actions {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Loading Animation */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Scroll Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            z-index: 3000;
-            animation: slideInRight 0.3s ease-out;
-            max-width: 300px;
-            display: none;
-        }
-
-        .notification.error {
-            background: var(--danger);
-        }
-
-        .notification.warning {
-            background: var(--warning);
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .nav-links a { margin: 0 0.75rem; }
+            .books-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+            .message-form { flex-direction: column; }
+            .section-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="glass">
-        <div class="header-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">SL</div>
-                <div class="logo-text">Syafi Library</div>
-            </a>
-            
-            <div class="nav-links">
+    <!-- Header & Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-book-open"></i> Syafi Library</div>
+            <nav class="nav-links">
                 <a href="#home" class="active">Beranda</a>
-                <a href="#categories">Kategori</a>
-                <a href="#books">Koleksi</a>
-                <a href="#featured">Terpopuler</a>
-                <a href="#about">Tentang</a>
-            </div>
-            
-            <div class="user-stats">
-                <div class="stat-badge">
-                    <span>👥</span>
-                    <span>12.5K+ Pengunjung</span>
-                </div>
-                <div class="stat-badge">
-                    <span>📚</span>
-                    <span>856+ Buku</span>
-                </div>
-            </div>
-            
-            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+                <a href="#books">Koleksi Buku</a>
+                <a href="#quotes">Kutipan</a>
+                <a href="#wall">Kata Teman</a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Transformasi Digital dalam Setiap Halaman Buku</h1>
-                <p>Temukan ribuan buku inspiratif untuk pengembangan diri, spiritual, dan psikologi di perpustakaan digital terbesar Indonesia.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card fade-in">
-                        <span class="stat-number">256K+</span>
-                        <span class="stat-label">Buku Telah Dibaca</span>
-                    </div>
-                    <div class="stat-card fade-in">
-                        <span class="stat-number">12.5K+</span>
-                        <span class="stat-label">Pengunjung Aktif</span>
-                    </div>
-                    <div class="stat-card fade-in">
-                        <span class="stat-number">856+</span>
-                        <span class="stat-label">Koleksi Buku</span>
-                    </div>
-                </div>
-                
-                <div class="search-container">
-                    <input type="text" class="search-box" placeholder="Cari judul buku, penulis, atau kata kunci..." oninput="searchBooks(this.value)">
-                    <div class="search-icon">🔍</div>
-                </div>
-            </div>
-            
-            <div class="hero-image">
-                <div class="floating-books">
-                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop" class="book-3d" alt="Book 1">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop" class="book-3d" alt="Book 2">
-                    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop" class="book-3d" alt="Book 3">
-                </div>
-            </div>
-        </div>
+        <h1>Baca Buku. Berbagi Inspirasi.</h1>
+        <p>Tempat nongkrong digital buat gen Z yang suka baca, diskusi, dan berkembang bareng.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('books').scrollIntoView({behavior:'smooth'});">
+            <i class="fas fa-book"></i> Jelajahi Koleksi
+        </button>
     </section>
 
-    <!-- Categories Section -->
-    <section class="categories" id="categories">
-        <div class="section-header fade-in">
-            <span class="section-subtitle">Kategori Unggulan</span>
-            <h2 class="section-title">Jelajahi Dunia Pengetahuan</h2>
-            <p class="section-description">Temukan buku-buku berkualitas dalam kategori yang paling dicari oleh pembaca kami.</p>
-        </div>
-        
-        <div class="categories-grid">
-            <div class="category-card fade-in">
-                <div class="category-icon">💪</div>
-                <h3>Self Motivation</h3>
-                <p>Buku pengembangan diri dan motivasi untuk meraih kesuksesan pribadi dan profesional.</p>
-                <div class="book-count">📚 245+ Buku</div>
-            </div>
-            
-            <div class="category-card fade-in">
-                <div class="category-icon">📖</div>
-                <h3>Novel Indonesia</h3>
-                <p>Karya sastra terbaik dari penulis Indonesia, dari klasik hingga kontemporer.</p>
-                <div class="book-count">📚 189+ Buku</div>
-            </div>
-            
-            <div class="category-card fade-in">
-                <div class="category-icon">🕌</div>
-                <h3>Keagamaan</h3>
-                <p>Buku spiritual dan keagamaan untuk memperdalam iman dan pemahaman agama.</p>
-                <div class="book-count">📚 312+ Buku</div>
-            </div>
-            
-            <div class="category-card fade-in">
-                <div class="category-icon">🧠</div>
-                <h3>Psikologi</h3>
-                <p>Pemahaman tentang pikiran dan perilaku manusia dari perspektif psikologi.</p>
-                <div class="book-count">📚 178+ Buku</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Books Section -->
-    <section class="books" id="books">
-        <div class="books-header fade-in">
-            <div>
-                <span class="section-subtitle">Koleksi Terbaru</span>
-                <h2 class="section-title">Buku Paling Diminati</h2>
-            </div>
-            
-            <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterBooks('all')">Semua</button>
-                <button class="filter-btn" onclick="filterBooks('Self Motivation')">Self Motivation</button>
-                <button class="filter-btn" onclick="filterBooks('Novel Indonesia')">Novel</button>
-                <button class="filter-btn" onclick="filterBooks('Keagamaan')">Keagamaan</button>
-                <button class="filter-btn" onclick="filterBooks('Psikologi')">Psikologi</button>
-            </div>
-            
-            <a href="#all-books" class="view-all">
-                Lihat Semua
-                <span>→</span>
-            </a>
-        </div>
-        
+    <!-- Koleksi Buku -->
+    <section class="container" id="books">
+        <h2 class="section-title"><i class="fas fa-books"></i> Koleksi Buku</h2>
         <div class="books-grid" id="booksGrid">
-            <!-- Books will be loaded by JavaScript -->
+            <!-- Kartu buku akan diisi oleh JavaScript -->
         </div>
     </section>
 
-    <!-- Featured Section -->
-    <section class="featured" id="featured">
-        <div class="featured-content">
-            <div class="fade-in">
-                <span class="featured-badge">📈 Buku Terpopuler</span>
-                <h2>"Atomic Habits" Telah Dibaca 45.678 Kali</h2>
-                <p>Bergabunglah dengan ratusan ribu pembaca yang telah mengubah hidup mereka melalui buku-buku inspiratif di Syafi Library.</p>
-                <div class="book-actions">
-                    <button class="btn btn-primary" onclick="readFeaturedBook()">
-                        📖 Baca Sekarang
-                    </button>
-                    <button class="btn btn-secondary" style="background: rgba(255,255,255,0.2); color: white;">
-                        ⭐ Tambah Favorit
-                    </button>
-                </div>
-            </div>
-            
-            <div class="fade-in">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-number">45.6K</span>
-                        <span class="stat-label">Pembaca Atomic Habits</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">32.1K</span>
-                        <span class="stat-label">Review Positif</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number">98%</span>
-                        <span class="stat-label">Kepuasan Pembaca</span>
-                    </div>
-                </div>
+    <!-- Kutipan Hari Ini -->
+    <section class="container" id="quotes">
+        <h2 class="section-title"><i class="fas fa-quote-left"></i> Kutipan Hari Ini</h2>
+        <div class="quote-section">
+            <div id="quoteDisplay">"Membaca adalah jendela dunia."</div>
+            <div id="authorDisplay">- Anonymous</div>
+            <div style="margin-top: 2rem;">
+                <button class="btn btn-outline" onclick="newQuote()">
+                    <i class="fas fa-redo"></i> Kutipan Baru
+                </button>
+                <button class="btn btn-outline" onclick="shareQuote()">
+                    <i class="fas fa-share-alt"></i> Bagikan
+                </button>
             </div>
         </div>
     </section>
+
+    <!-- Wall of Messages / Kata-kata Hari Ini -->
+    <section class="container" id="wall">
+        <h2 class="section-title"><i class="fas fa-comment-dots"></i> Kata-Kata Hari Ini</h2>
+        <div class="wall-section">
+            <p style="margin-bottom: 1.5rem; color: var(--gray);">Apa motivasi atau pikiran kerenmu hari ini? Share di sini!</p>
+            <div class="message-form">
+                <input type="text" id="messageInput" placeholder="Tulis pesanmu di sini... (max 150 karakter)" maxlength="150">
+                <button class="btn btn-primary" onclick="postMessage()"><i class="fas fa-paper-plane"></i> Kirim</button>
+            </div>
+            <div class="messages-container" id="messagesContainer">
+                <!-- Pesan akan dimuat otomatis dari Firebase -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel (Toggle Button) -->
+    <div class="admin-panel">
+        <button id="adminToggle" title="Admin Panel"><i class="fas fa-cog"></i></button>
+    </div>
+
+    <!-- Admin Modal (Form Tambah Buku) -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h2><i class="fas fa-plus-circle"></i> Tambah Buku Baru</h2>
+            <form onsubmit="addNewBook(event)">
+                <div class="form-group">
+                    <label for="bookTitle">Judul Buku</label>
+                    <input type="text" id="bookTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookAuthor">Penulis</label>
+                    <input type="text" id="bookAuthor" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookCategory">Kategori</label>
+                    <select id="bookCategory" required>
+                        <option value="Self Motivation">💪 Self Motivation</option>
+                        <option value="Novel Indonesia">📖 Novel Indonesia</option>
+                        <option value="Keagamaan">🕌 Keagamaan</option>
+                        <option value="Psikologi">🧠 Psikologi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="bookCover">URL Cover Buku</label>
+                    <input type="url" id="bookCover" placeholder="https://example.com/cover.jpg" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Deskripsi Singkat</label>
+                    <textarea id="bookDescription" required></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Simpan Buku</button>
+                    <button type="button" class="btn btn-outline" onclick="closeAdminModal()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer id="about">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Syafi Library</h3>
-                <p>Platform perpustakaan digital terdepan di Indonesia dengan ribuan buku berkualitas untuk transformasi hidup Anda.</p>
-                <div class="social-links">
-                    <a href="#">📘</a>
-                    <a href="#">📷</a>
-                    <a href="#">🐦</a>
-                    <a href="#">📹</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Kategori</h3>
-                <ul class="footer-links">
-                    <li><a href="#">Self Motivation</a></li>
-                    <li><a href="#">Novel Indonesia</a></li>
-                    <li><a href="#">Buku Keagamaan</a></li>
-                    <li><a href="#">Psikologi</a></li>
-                    <li><a href="#">Bisnis & Ekonomi</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Statistik</h3>
-                <p>📚 Total Buku: <strong id="totalBooksCount">0</strong></p>
-                <p>👥 Pengunjung: <strong>12.5K+</strong></p>
-                <p>📖 Bacaan: <strong>256K+</strong></p>
-                <p>⭐ Rating: <strong>4.9/5</strong></p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Kontak</h3>
-                <p>📧 info@syafilibrary.com</p>
-                <p>📞 +62 812-3456-7890</p>
-                <p>📍 Jakarta, Indonesia</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 Syafi Library. All rights reserved. | Telah melayani 256.432 pembaca sejak 2020</p>
-        </div>
+    <footer>
+        <p>Dibuat dengan ❤️ untuk teman-teman Gen Z. | © 2025 Syafi Library</p>
     </footer>
 
-    <!-- Admin Panel -->
-    <div class="admin-panel">
-        <button class="admin-btn" onclick="openAdminPanel()">
-            <span>📚</span>
-            Admin Panel
-        </button>
-    </div>
-
-    <!-- Admin Modal -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchTab('stats')">
-                    <span>📊</span>
-                    Statistik
-                </button>
-                <button class="tab-btn" onclick="switchTab('upload')">
-                    <span>📤</span>
-                    Upload Buku
-                </button>
-                <button class="tab-btn" onclick="switchTab('manage')">
-                    <span>📝</span>
-                    Kelola Buku
-                </button>
-            </div>
-            
-            <div id="statsTab" class="tab-content active">
-                <div style="padding: 2rem;">
-                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📊 Statistik Lengkap</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalBooks">0</div>
-                            <div style="color: var(--gray);">Total Buku</div>
-                        </div>
-                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalReads">0</div>
-                            <div style="color: var(--gray);">Total Pembacaan</div>
-                        </div>
-                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalDownloads">0</div>
-                            <div style="color: var(--gray);">Total Unduhan</div>
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin-bottom: 1rem;">📈 Statistik per Kategori</h3>
-                    <div id="categoryStats" style="background: var(--light); padding: 1.5rem; border-radius: var(--radius);">
-                        <!-- Category stats will be loaded here -->
-                    </div>
-                </div>
-            </div>
-            
-            <div id="uploadTab" class="tab-content">
-                <div style="padding: 2rem;">
-                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📤 Upload Buku Baru</h2>
-                    
-                    <form id="uploadForm" class="upload-form">
-                        <div class="form-group">
-                            <label for="bookTitle">Judul Buku *</label>
-                            <input type="text" id="bookTitle" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="bookAuthor">Penulis *</label>
-                                <input type="text" id="bookAuthor" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bookCategory">Kategori *</label>
-                                <select id="bookCategory" class="form-control" required>
-                                    <option value="">Pilih Kategori</option>
-                                    <option value="Self Motivation">Self Motivation</option>
-                                    <option value="Novel Indonesia">Novel Indonesia</option>
-                                    <option value="Keagamaan">Keagamaan</option>
-                                    <option value="Psikologi">Psikologi</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="bookDescription">Deskripsi Buku *</label>
-                            <textarea id="bookDescription" class="form-control" required></textarea>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="bookPages">Jumlah Halaman</label>
-                                <input type="number" id="bookPages" class="form-control" min="1" value="200">
-                            </div>
-                            <div class="form-group">
-                                <label for="bookYear">Tahun Terbit</label>
-                                <input type="number" id="bookYear" class="form-control" min="1900" max="2024" value="2024">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Upload Cover Buku *</label>
-                            <div class="drive-upload">
-                                <h4>📁 Upload dari Google Drive</h4>
-                                <p style="color: var(--gray); margin-bottom: 1rem;">Ikuti langkah berikut untuk upload dari Google Drive:</p>
-                                <ol class="drive-steps">
-                                    <li>Upload gambar ke Google Drive</li>
-                                    <li>Klik kanan file → "Dapatkan link berbagi"</li>
-                                    <li>Ubah izin menjadi "Siapa saja dengan link"</li>
-                                    <li>Copy link dan paste di bawah</li>
-                                </ol>
-                                <input type="url" id="driveLink" class="form-control" 
-                                       placeholder="https://drive.google.com/file/d/.../view?usp=sharing"
-                                       oninput="convertDriveLink(this.value)">
-                                <input type="hidden" id="coverImage" required>
-                                <div id="previewContainer" style="margin-top: 1rem; display: none;">
-                                    <img id="imagePreview" style="max-width: 200px; border-radius: var(--radius);">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Atau Upload File Buku (PDF)</label>
-                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()" 
-                                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" 
-                                 ondrop="handleDrop(event)">
-                                <div class="upload-icon">📄</div>
-                                <div class="upload-instruction">
-                                    <p>Klik untuk pilih file atau tarik file PDF ke sini</p>
-                                    <p style="font-size: 0.9rem;">Maksimal 10MB</p>
-                                </div>
-                                <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)">
-                            </div>
-                            <div id="fileInfo" class="file-info">
-                                <span id="fileName"></span>
-                                <span id="fileSize"></span>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                            <button type="submit" class="btn btn-primary" style="flex: 1;">
-                                📤 Upload Buku
-                            </button>
-                            <button type="button" class="btn btn-secondary" onclick="resetUploadForm()">
-                                🔄 Reset
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div id="manageTab" class="tab-content">
-                <div style="padding: 2rem;">
-                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📝 Kelola Koleksi Buku</h2>
-                    <div id="booksList">
-                        <!-- Books list will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div id="notification" class="notification">
-        <span id="notificationText"></span>
-    </div>
-
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
     <script>
-        // Data buku lengkap
-        const books = [
+        // ========== 1. KONFIGURASI FIREBASE ==========
+        // 🔧 GANTI kode berikut dengan konfigurasi dari Firebase Console Anda
+        const firebaseConfig = {
+            /* PASTE_KONFIGURASI_FIREBASE_DARI_KONSOL */
+            apiKey: "AIzaSyAxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            authDomain: "syafi-library.firebaseapp.com",
+            databaseURL: "https://syafi-library-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "syafi-library",
+            storageBucket: "syafi-library.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456"
+        };
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // ========== 2. DATA BUKU AWAL ==========
+        const initialBooks = [
             {
-                id: 1,
-                title: 'Atomic Habits',
-                author: 'James Clear',
-                category: 'Self Motivation',
-                cover: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop',
-                rating: 4.9,
-                reads: 45678,
-                description: 'Perubahan kecil yang memberikan hasil luar biasa',
-                pages: 320,
-                year: 2018,
-                downloads: 12345,
-                dateAdded: '2024-01-15'
+                title: "Atomic Habits",
+                author: "James Clear",
+                category: "Self Motivation",
+                cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop",
+                description: "Perubahan kecil yang memberikan hasil luar biasa."
             },
             {
-                id: 2,
-                title: 'Laskar Pelangi',
-                author: 'Andrea Hirata',
-                category: 'Novel Indonesia',
-                cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop',
-                rating: 4.8,
-                reads: 34567,
-                description: 'Kisah inspiratif anak-anak Belitung',
-                pages: 529,
-                year: 2005,
-                downloads: 23456,
-                dateAdded: '2024-01-10'
+                title: "Laskar Pelangi",
+                author: "Andrea Hirata",
+                category: "Novel Indonesia",
+                cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop",
+                description: "Kisah inspiratif anak-anak Belitung yang berjuang meraih mimpi."
             },
             {
-                id: 3,
-                title: 'Revolusi Shalat',
-                author: 'KH. Abdullah Gymnastiar',
-                category: 'Keagamaan',
-                cover: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop',
-                rating: 4.7,
-                reads: 28901,
-                description: 'Transformasi spiritual melalui shalat',
-                pages: 280,
-                year: 2015,
-                downloads: 18900,
-                dateAdded: '2024-01-05'
+                title: "Revolusi Shalat",
+                author: "KH. Abdullah Gymnastiar",
+                category: "Keagamaan",
+                cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop",
+                description: "Transformasi spiritual melalui shalat."
             },
             {
-                id: 4,
-                title: 'Thinking, Fast and Slow',
-                author: 'Daniel Kahneman',
-                category: 'Psikologi',
-                cover: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop',
-                rating: 4.8,
-                reads: 38912,
-                description: 'Dua sistem yang mengendalikan pikiran kita',
-                pages: 499,
-                year: 2011,
-                downloads: 27890,
-                dateAdded: '2024-01-20'
+                title: "Thinking, Fast and Slow",
+                author: "Daniel Kahneman",
+                category: "Psikologi",
+                cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop",
+                description: "Dua sistem yang mengendalikan pikiran kita."
             }
         ];
 
-        // Variabel global
-        let currentFilter = 'all';
-        let adminPanelOpen = false;
-        let currentTab = 'stats';
-        let selectedFile = null;
+        // ========== 3. DATA KUTIPAN ==========
+        const quotes = [
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Buku adalah jendela dunia.", author: "Peribahasa" },
+            { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+            { text: "Orang yang tidak membaca buku sama buruknya dengan mereka yang tidak bisa membaca.", author: "Mark Twain" },
+            { text: "Kesuksesan adalah kemampuan untuk berpindah dari satu kegagalan ke kegagalan berikutnya tanpa kehilangan antusiasme.", author: "Winston Churchill" }
+        ];
 
-        // Inisialisasi website
-        function init() {
-            loadBooksFromStorage();
-            renderBooks();
-            setupEventListeners();
-            setupScrollAnimation();
-            updateVisitorCount();
-            updateStats();
-            renderManageBooks();
-        }
-
-        // Load books from localStorage
-        function loadBooksFromStorage() {
-            const storedBooks = localStorage.getItem('syafi_library_books');
-            if (storedBooks) {
-                const parsedBooks = JSON.parse(storedBooks);
-                books.length = 0;
-                parsedBooks.forEach(book => books.push(book));
-            }
-        }
-
-        // Save books to localStorage
-        function saveBooksToStorage() {
-            localStorage.setItem('syafi_library_books', JSON.stringify(books));
-        }
-
-        // Render buku ke grid
+        // ========== 4. FUNGSI UTAMA WEBSITE ==========
+        // A. Render Koleksi Buku
         function renderBooks() {
-            const booksGrid = document.getElementById('booksGrid');
-            const filteredBooks = currentFilter === 'all' 
-                ? books 
-                : books.filter(book => book.category === currentFilter);
-
-            if (filteredBooks.length === 0) {
-                booksGrid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-                        <h3>Tidak ada buku ditemukan</h3>
-                        <p>Coba filter kategori lain atau tambah buku baru</p>
-                    </div>
-                `;
-                return;
-            }
-
-            booksGrid.innerHTML = filteredBooks.map(book => `
-                <div class="book-card fade-in">
-                    <div class="book-badge">🔥 ${book.reads.toLocaleString()}x Dibaca</div>
-                    <img src="${book.cover}" alt="${book.title}" class="book-image" 
-                         onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop'">
-                    <div class="book-content">
+            const grid = document.getElementById('booksGrid');
+            grid.innerHTML = initialBooks.map(book => `
+                <div class="book-card">
+                    <img src="${book.cover}" alt="${book.title}" class="book-cover">
+                    <div class="book-info">
                         <span class="book-category">${book.category}</span>
                         <h3 class="book-title">${book.title}</h3>
-                        <p class="book-author">oleh ${book.author} • ${book.year}</p>
-                        <p class="book-description">${book.description}</p>
-                        <div class="book-stats">
-                            <div class="rating">
-                                ${'★'.repeat(Math.floor(book.rating))}${'☆'.repeat(5-Math.floor(book.rating))}
-                                <span>${book.rating}</span>
-                            </div>
-                            <div>${book.pages} halaman</div>
-                        </div>
+                        <p class="book-author">${book.author}</p>
+                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem;">${book.description}</p>
                         <div class="book-actions">
-                            <button class="btn btn-primary" onclick="readBook(${book.id})">
-                                📖 Baca
+                            <button class="btn btn-primary" onclick="alert('Buku "${book.title}" siap dibaca! (Fitur baca akan dikembangkan)')">
+                                <i class="fas fa-book-open"></i> Baca
                             </button>
-                            <button class="btn btn-secondary" onclick="downloadBook(${book.id})">
-                                ⬇️ Unduh
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Update total books count
-            document.getElementById('totalBooksCount').textContent = books.length;
-        }
-
-        // Filter buku berdasarkan kategori
-        function filterBooks(filter) {
-            currentFilter = filter;
-            
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            renderBooks();
-        }
-
-        // Search books
-        function searchBooks(query) {
-            if (query.length < 2) {
-                renderBooks();
-                return;
-            }
-            
-            const searchResults = books.filter(book => 
-                book.title.toLowerCase().includes(query.toLowerCase()) ||
-                book.author.toLowerCase().includes(query.toLowerCase()) ||
-                book.description.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            const booksGrid = document.getElementById('booksGrid');
-            
-            if (searchResults.length === 0) {
-                booksGrid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-                        <h3>Tidak ditemukan hasil untuk "${query}"</h3>
-                        <p>Coba kata kunci lain</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            booksGrid.innerHTML = searchResults.map(book => `
-                <div class="book-card fade-in">
-                    <div class="book-badge">🔥 ${book.reads.toLocaleString()}x Dibaca</div>
-                    <img src="${book.cover}" alt="${book.title}" class="book-image">
-                    <div class="book-content">
-                        <span class="book-category">${book.category}</span>
-                        <h3 class="book-title">${book.title}</h3>
-                        <p class="book-author">oleh ${book.author} • ${book.year}</p>
-                        <p class="book-description">${book.description}</p>
-                        <div class="book-stats">
-                            <div class="rating">
-                                ${'★'.repeat(Math.floor(book.rating))}${'☆'.repeat(5-Math.floor(book.rating))}
-                                <span>${book.rating}</span>
-                            </div>
-                            <div>${book.pages} halaman</div>
-                        </div>
-                        <div class="book-actions">
-                            <button class="btn btn-primary" onclick="readBook(${book.id})">
-                                📖 Baca
-                            </button>
-                            <button class="btn btn-secondary" onclick="downloadBook(${book.id})">
-                                ⬇️ Unduh
+                            <button class="btn btn-outline" onclick="alert('Menambahkan "${book.title}" ke favorit!')">
+                                <i class="far fa-heart"></i> Favorit
                             </button>
                         </div>
                     </div>
@@ -1687,428 +577,98 @@
             `).join('');
         }
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Upload form submission
-            document.getElementById('uploadForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                uploadBook();
-            });
+        // B. Kutipan Hari Ini (Random)
+        function newQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            document.getElementById('quoteDisplay').textContent = `"${quotes[randomIndex].text}"`;
+            document.getElementById('authorDisplay').textContent = `- ${quotes[randomIndex].author}`;
+        }
+        function shareQuote() {
+            const quote = document.getElementById('quoteDisplay').textContent;
+            const author = document.getElementById('authorDisplay').textContent;
+            alert(`Bagikan kutipan ini:\n\n${quote}\n${author}\n\nDari Syafi Library`);
+        }
 
-            // Mobile menu toggle
-            window.toggleMenu = function() {
-                const navLinks = document.querySelector('.nav-links');
-                navLinks.classList.toggle('active');
-            };
+        // C. Wall of Messages dengan Firebase
+        function postMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            if (!text) return alert('Pesan tidak boleh kosong!');
 
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function(e) {
-                const navLinks = document.querySelector('.nav-links');
-                const menuBtn = document.querySelector('.mobile-menu-btn');
-                if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
-                    navLinks.classList.remove('active');
-                }
+            const newMessageRef = database.ref('messages').push();
+            newMessageRef.set({
+                text: text,
+                author: "Teman",
+                timestamp: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}),
+                date: new Date().toLocaleDateString('id-ID')
+            }).then(() => {
+                input.value = ''; // Kosongkan input
+            }).catch(error => {
+                console.error("Error posting message: ", error);
+                alert('Gagal mengirim pesan. Coba lagi.');
             });
         }
 
-        // Scroll animation
-        function setupScrollAnimation() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        }
-
-        // Update visitor count (simulated)
-        function updateVisitorCount() {
-            const baseCount = 12500;
-            const randomIncrement = Math.floor(Math.random() * 100);
-            const totalCount = baseCount + randomIncrement;
-            
-            document.querySelectorAll('.stat-badge').forEach(badge => {
-                if (badge.textContent.includes('Pengunjung')) {
-                    badge.innerHTML = `<span>👥</span><span>${totalCount.toLocaleString()}+ Pengunjung</span>`;
-                }
+        // D. Baca & Tampilkan Pesan dari Firebase
+        database.ref('messages').limitToLast(10).on('value', (snapshot) => {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '';
+            const messages = [];
+            snapshot.forEach(childSnapshot => {
+                messages.push({ id: childSnapshot.key, ...childSnapshot.val() });
             });
-        }
-
-        // Update statistics
-        function updateStats() {
-            const totalBooks = books.length;
-            const totalReads = books.reduce((sum, book) => sum + book.reads, 0);
-            const totalDownloads = books.reduce((sum, book) => sum + book.downloads, 0);
-            
-            document.getElementById('statTotalBooks').textContent = totalBooks;
-            document.getElementById('statTotalReads').textContent = totalReads.toLocaleString();
-            document.getElementById('statTotalDownloads').textContent = totalDownloads.toLocaleString();
-            
-            // Update category stats
-            const categoryStats = {};
-            books.forEach(book => {
-                if (!categoryStats[book.category]) {
-                    categoryStats[book.category] = { count: 0, reads: 0 };
-                }
-                categoryStats[book.category].count++;
-                categoryStats[book.category].reads += book.reads;
-            });
-            
-            let categoryStatsHTML = '';
-            for (const [category, stats] of Object.entries(categoryStats)) {
-                categoryStatsHTML += `
-                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-light);">
-                        <span>${category}</span>
-                        <span><strong>${stats.count}</strong> buku • ${stats.reads.toLocaleString()}x dibaca</span>
+            // Urutkan terbaru di atas
+            messages.reverse().forEach(msg => {
+                const msgEl = document.createElement('div');
+                msgEl.className = 'message';
+                msgEl.innerHTML = `
+                    <div class="text">${msg.text}</div>
+                    <div class="meta">
+                        <span>👤 ${msg.author}</span>
+                        <span>⏰ ${msg.date} ${msg.timestamp}</span>
                     </div>
                 `;
-            }
-            
-            document.getElementById('categoryStats').innerHTML = categoryStatsHTML;
-        }
+                container.appendChild(msgEl);
+            });
+        }, (error) => {
+            console.error("Error loading messages: ", error);
+        });
 
-        // Book actions
-        function readBook(bookId) {
-            const book = books.find(b => b.id === bookId);
-            book.reads += Math.floor(Math.random() * 100) + 1;
-            saveBooksToStorage();
-            renderBooks();
-            updateStats();
-            
-            showNotification(`📖 Membaca "${book.title}"`, 'success');
-            
-            // Simulate reading experience
-            setTimeout(() => {
-                alert(`SELAMAT MEMBACA!\n\n"${book.title}"\n\nPenulis: ${book.author}\nHalaman: ${book.pages}\n\nBuku ini telah dibaca ${book.reads.toLocaleString()} kali oleh pembaca Syafi Library!`);
-            }, 500);
-        }
-
-        function downloadBook(bookId) {
-            const book = books.find(b => b.id === bookId);
-            book.downloads += 1;
-            saveBooksToStorage();
-            updateStats();
-            
-            showNotification(`⬇️ Mengunduh "${book.title}"`, 'success');
-            
-            // Simulate download
-            setTimeout(() => {
-                alert(`Buku "${book.title}" berhasil diunduh!\n\nTotal unduhan: ${book.downloads}`);
-            }, 500);
-        }
-
-        function readFeaturedBook() {
-            const featuredBook = books.find(b => b.id === 1);
-            readBook(1);
-        }
-
-        // Admin Panel functions
-        function openAdminPanel() {
-            if (!adminPanelOpen) {
-                updateStats();
-                renderManageBooks();
-                document.getElementById('adminModal').style.display = 'block';
-                adminPanelOpen = true;
-            } else {
-                closeAdminPanel();
-            }
-        }
-
-        function closeAdminPanel() {
+        // E. Admin Panel Functions
+        document.getElementById('adminToggle').addEventListener('click', () => {
+            document.getElementById('adminModal').style.display = 'flex';
+        });
+        function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
-            adminPanelOpen = false;
-            resetUploadForm();
+            document.querySelector('#adminModal form').reset();
         }
-
-        function switchTab(tabName) {
-            currentTab = tabName;
-            
-            // Update active tab button
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Show selected tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabName + 'Tab').classList.add('active');
-        }
-
-        // Upload functions
-        function convertDriveLink(driveLink) {
-            if (!driveLink.includes('drive.google.com')) return;
-            
-            // Convert Google Drive share link to direct image link
-            const fileId = driveLink.match(/\/d\/(.+?)\//)?.[1] || 
-                          driveLink.match(/id=(.+?)(&|$)/)?.[1];
-            
-            if (fileId) {
-                const directLink = `https://drive.google.com/uc?export=view&id=${fileId}`;
-                document.getElementById('coverImage').value = directLink;
-                
-                // Show preview
-                const preview = document.getElementById('imagePreview');
-                const container = document.getElementById('previewContainer');
-                preview.src = directLink;
-                container.style.display = 'block';
-                
-                showNotification('✅ Link Google Drive berhasil dikonversi', 'success');
-            }
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.currentTarget.classList.remove('dragover');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect({ target: { files } });
-            }
-        }
-
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            if (file.type !== 'application/pdf') {
-                showNotification('❌ Hanya file PDF yang diizinkan', 'error');
-                return;
-            }
-            
-            if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                showNotification('❌ Ukuran file maksimal 10MB', 'error');
-                return;
-            }
-            
-            selectedFile = file;
-            
-            // Show file info
-            document.getElementById('fileName').textContent = file.name;
-            document.getElementById('fileSize').textContent = ` (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
-            document.getElementById('fileInfo').style.display = 'block';
-            
-            showNotification('📄 File siap diupload', 'success');
-        }
-
-        function uploadBook() {
-            const title = document.getElementById('bookTitle').value;
-            const author = document.getElementById('bookAuthor').value;
-            const category = document.getElementById('bookCategory').value;
-            const description = document.getElementById('bookDescription').value;
-            const pages = parseInt(document.getElementById('bookPages').value);
-            const year = parseInt(document.getElementById('bookYear').value);
-            const cover = document.getElementById('coverImage').value;
-            
-            // Generate new book ID
-            const newId = books.length > 0 ? Math.max(...books.map(b => b.id)) + 1 : 1;
-            
-            const newBook = {
-                id: newId,
-                title,
-                author,
-                category,
-                cover: cover || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop',
-                rating: 4.0 + Math.random() * 0.9, // Random rating 4.0-4.9
-                reads: Math.floor(Math.random() * 1000) + 100,
-                description,
-                pages,
-                year,
-                downloads: Math.floor(Math.random() * 500) + 50,
-                dateAdded: new Date().toISOString().split('T')[0]
-            };
-            
-            books.push(newBook);
-            saveBooksToStorage();
-            renderBooks();
-            updateStats();
-            renderManageBooks();
-            
-            showNotification(`✅ Buku "${title}" berhasil ditambahkan!`, 'success');
-            
-            // Reset form
-            resetUploadForm();
-            
-            // Switch to manage tab
-            switchTab('manage');
-        }
-
-        function resetUploadForm() {
-            document.getElementById('uploadForm').reset();
-            document.getElementById('coverImage').value = '';
-            document.getElementById('previewContainer').style.display = 'none';
-            document.getElementById('fileInfo').style.display = 'none';
-            selectedFile = null;
-        }
-
-        // Manage books functions
-        function renderManageBooks() {
-            const booksList = document.getElementById('booksList');
-            
-            if (books.length === 0) {
-                booksList.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-                        <h3>Belum ada buku</h3>
-                        <p>Mulai tambah buku dengan klik tab Upload Buku</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            booksList.innerHTML = books.map(book => `
-                <div style="background: var(--light); padding: 1rem; border-radius: var(--radius); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
-                    <img src="${book.cover}" alt="${book.title}" style="width: 60px; height: 80px; object-fit: cover; border-radius: 6px;">
-                    <div style="flex: 1;">
-                        <h4 style="margin-bottom: 0.25rem;">${book.title}</h4>
-                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 0.25rem;">${book.author} • ${book.category}</p>
-                        <p style="color: var(--gray); font-size: 0.8rem;">Ditambahkan: ${book.dateAdded} • Dibaca: ${book.reads.toLocaleString()}x</p>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button onclick="editBook(${book.id})" style="background: var(--warning); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
-                            ✏️ Edit
-                        </button>
-                        <button onclick="deleteBook(${book.id})" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
-                            🗑️ Hapus
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function editBook(bookId) {
-            const book = books.find(b => b.id === bookId);
-            if (!book) return;
-            
-            // Fill form with book data
-            document.getElementById('bookTitle').value = book.title;
-            document.getElementById('bookAuthor').value = book.author;
-            document.getElementById('bookCategory').value = book.category;
-            document.getElementById('bookDescription').value = book.description;
-            document.getElementById('bookPages').value = book.pages;
-            document.getElementById('bookYear').value = book.year;
-            document.getElementById('coverImage').value = book.cover;
-            
-            // Show preview
-            const preview = document.getElementById('imagePreview');
-            const container = document.getElementById('previewContainer');
-            preview.src = book.cover;
-            container.style.display = 'block';
-            
-            // Switch to upload tab
-            switchTab('upload');
-            
-            // Change form to edit mode
-            const form = document.getElementById('uploadForm');
-            form.onsubmit = function(e) {
-                e.preventDefault();
-                updateBook(bookId);
-            };
-            
-            // Change button text
-            form.querySelector('button[type="submit"]').innerHTML = '💾 Update Buku';
-            
-            showNotification(`✏️ Mengedit buku "${book.title}"`, 'warning');
-        }
-
-        function updateBook(bookId) {
-            const bookIndex = books.findIndex(b => b.id === bookId);
-            if (bookIndex === -1) return;
-            
-            const title = document.getElementById('bookTitle').value;
-            const author = document.getElementById('bookAuthor').value;
-            const category = document.getElementById('bookCategory').value;
-            const description = document.getElementById('bookDescription').value;
-            const pages = parseInt(document.getElementById('bookPages').value);
-            const year = parseInt(document.getElementById('bookYear').value);
-            const cover = document.getElementById('coverImage').value;
-            
-            books[bookIndex] = {
-                ...books[bookIndex],
-                title,
-                author,
-                category,
-                description,
-                pages,
-                year,
-                cover: cover || books[bookIndex].cover
-            };
-            
-            saveBooksToStorage();
-            renderBooks();
-            updateStats();
-            renderManageBooks();
-            
-            showNotification(`✅ Buku "${title}" berhasil diperbarui!`, 'success');
-            
-            // Reset form
-            resetUploadForm();
-            
-            // Restore form to upload mode
-            const form = document.getElementById('uploadForm');
-            form.onsubmit = function(e) {
-                e.preventDefault();
-                uploadBook();
-            };
-            form.querySelector('button[type="submit"]').innerHTML = '📤 Upload Buku';
-            
-            // Switch to manage tab
-            switchTab('manage');
-        }
-
-        function deleteBook(bookId) {
-            if (!confirm('Apakah Anda yakin ingin menghapus buku ini?')) return;
-            
-            const bookIndex = books.findIndex(b => b.id === bookId);
-            if (bookIndex === -1) return;
-            
-            const deletedBook = books[bookIndex];
-            books.splice(bookIndex, 1);
-            saveBooksToStorage();
-            renderBooks();
-            updateStats();
-            renderManageBooks();
-            
-            showNotification(`🗑️ Buku "${deletedBook.title}" telah dihapus`, 'warning');
-        }
-
-        // Notification system
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            const notificationText = document.getElementById('notificationText');
-            
-            notificationText.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('adminModal');
-            if (event.target === modal) {
-                closeAdminPanel();
-            }
-        };
+            if (event.target === modal) closeAdminModal();
+        }
+        function addNewBook(event) {
+            event.preventDefault();
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const category = document.getElementById('bookCategory').value;
+            const cover = document.getElementById('bookCover').value;
+            const description = document.getElementById('bookDescription').value;
 
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', init);
+            // Tambahkan ke array buku
+            initialBooks.push({title, author, category, cover, description});
+            // Render ulang
+            renderBooks();
+            // Tutup modal & reset form
+            closeAdminModal();
+            alert(`Buku "${title}" berhasil ditambahkan!`);
+        }
+
+        // ========== 5. INISIALISASI SAAT HALAMAN DIMUAT ==========
+        window.addEventListener('DOMContentLoaded', () => {
+            renderBooks();
+            newQuote(); // Tampilkan kutipan random pertama
+            console.log('Syafi Library siap digunakan! 🚀');
+        });
     </script>
 </body>
 </html>
