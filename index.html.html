@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syafi Library - Perpustakaan Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Categories */
+        .categories {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .category-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Books Section */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            position: relative;
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .book-description {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .book-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .star {
+            color: #fbbf24;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #374151;
+            color: #9ca3af;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            padding: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Syafi Library</span>
+            </div>
+            <nav id="nav">
+                <a href="#home">Beranda</a>
+                <a href="#collection">Koleksi</a>
+                <a href="#favorite">Favorit</a>
+                <a href="#about">Tentang</a>
+            </nav>
+            <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Selamat Datang di Syafi Library</h1>
+        <p>Ribuan buku digital dalam genggaman Anda</p>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cari judul buku, penulis, atau kategori..." onkeyup="searchBooks()">
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <div class="categories">
+        <button class="category-btn active" onclick="filterCategory('Semua')">Semua</button>
+        <button class="category-btn" onclick="filterCategory('Fiksi')">Fiksi</button>
+        <button class="category-btn" onclick="filterCategory('Non-Fiksi')">Non-Fiksi</button>
+        <button class="category-btn" onclick="filterCategory('Sains')">Sains</button>
+        <button class="category-btn" onclick="filterCategory('Teknologi')">Teknologi</button>
+        <button class="category-btn" onclick="filterCategory('Sejarah')">Sejarah</button>
+        <button class="category-btn" onclick="filterCategory('Seni')">Seni</button>
+    </div>
+
+    <!-- Books Section -->
+    <div class="container" id="collection">
+        <h2 class="section-title">Koleksi Buku</h2>
+        <div class="books-grid" id="booksGrid">
+            <!-- Books will be generated by JavaScript -->
+        </div>
+        <div id="noResults" class="no-results" style="display: none;">
+            Tidak ada buku yang ditemukan
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Syafi Library</h3>
+                <p>Platform perpustakaan digital terlengkap untuk semua kalangan. Akses ribuan buku kapan saja, dimana saja.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Tautan Cepat</h3>
+                <p><a href="#home">Beranda</a></p>
+                <p><a href="#collection">Koleksi Buku</a></p>
+                <p><a href="#about">Tentang Kami</a></p>
+                <p><a href="#contact">Kontak</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Hubungi Kami</h3>
+                <p>Email: info@syafilbrary.com</p>
+                <p>Telepon: +62 812-3456-7890</p>
+                <p>WhatsApp: +62 812-3456-7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Syafi Library. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data buku
+        const books = [
+            {
+                id: 1,
+                title: 'Panduan Pemrograman Web',
+                author: 'Ahmad Ridwan',
+                category: 'Teknologi',
+                cover: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop',
+                rating: 4.5,
+                downloads: 1234,
+                description: 'Belajar pemrograman web dari dasar hingga mahir dengan berbagai contoh praktis'
+            },
+            {
+                id: 2,
+                title: 'Sejarah Nusantara',
+                author: 'Siti Nurhaliza',
+                category: 'Sejarah',
+                cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop',
+                rating: 4.8,
+                downloads: 2341,
+                description: 'Menelusuri jejak peradaban Indonesia dari masa ke masa'
+            },
+            {
+                id: 3,
+                title: 'Novel Laskar Pelangi',
+                author: 'Andrea Hirata',
+                category: 'Fiksi',
+                cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop',
+                rating: 4.9,
+                downloads: 5678,
+                description: 'Kisah inspiratif anak-anak Belitung yang berjuang meraih mimpi'
+            },
+            {
+                id: 4,
+                title: 'Fisika Kuantum',
+                author: 'Dr. Budi Santoso',
+                category: 'Sains',
+                cover: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop',
+                rating: 4.3,
+                downloads: 891,
+                description: 'Memahami dunia partikel subatomik dengan penjelasan sederhana'
+            },
+            {
+                id: 5,
+                title: 'Desain Grafis Modern',
+                author: 'Rina Wijaya',
+                category: 'Seni',
+                cover: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&h=600&fit=crop',
+                rating: 4.6,
+                downloads: 1567,
+                description: 'Prinsip dan teknik desain kontemporer untuk pemula hingga profesional'
+            },
+            {
+                id: 6,
+                title: 'Ekonomi Digital',
+                author: 'Prof. Hendra',
+                category: 'Non-Fiksi',
+                cover: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&h=600&fit=crop',
+                rating: 4.4,
+                downloads: 1123,
+                description: 'Transformasi ekonomi di era digital dan dampaknya pada bisnis'
+            }
+        ];
+
+        let currentCategory = 'Semua';
+        let searchQuery = '';
+
+        // Generate book cards
+        function renderBooks() {
+            const booksGrid = document.getElementById('booksGrid');
+            const noResults = document.getElementById('noResults');
+            
+            const filteredBooks = books.filter(book => {
+                const matchesCategory = currentCategory === 'Semua' || book.category === currentCategory;
+                const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    book.author.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filteredBooks.length === 0) {
+                booksGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            booksGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+
+            booksGrid.innerHTML = filteredBooks.map(book => `
+                <div class="book-card">
+                    <img src="${book.cover}" alt="${book.title}" class="book-cover">
+                    <div class="book-info">
+                        <span class="book-category">${book.category}</span>
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">oleh ${book.author}</p>
+                        <p class="book-description">${book.description}</p>
+                        <div class="book-stats">
+                            <div class="rating">
+                                <span class="star">★</span>
+                                <span>${book.rating}</span>
+                            </div>
+                            <div>${book.downloads} downloads</div>
+                        </div>
+                        <div class="book-actions">
+                            <button class="btn btn-primary" onclick="readBook(${book.id})">
+                                👁️ Baca
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadBook(${book.id})">
+                                ⬇️ Unduh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update active button
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            renderBooks();
+        }
+
+        // Search books
+        function searchBooks() {
+            searchQuery = document.getElementById('searchInput').value;
+            renderBooks();
+        }
+
+        // Read book
+        function readBook(id) {
+            const book = books.find(b => b.id === id);
+            alert(`Membuka buku: ${book.title}\n\nFitur baca buku akan segera tersedia!`);
+        }
+
+        // Download book
+        function downloadBook(id) {
+            const book = books.find(b => b.id === id);
+            alert(`Mengunduh buku: ${book.title}\n\nFitur download akan segera tersedia!`);
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const nav = document.getElementById('nav');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '60px';
+                nav.style.right = '20px';
+                nav.style.background = 'white';
+                nav.style.padding = '1rem';
+                nav.style.borderRadius = '8px';
+                nav.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+            }
+        }
+
+        // Initial render
+        renderBooks();
+    </script>
+</body>
+</html>
