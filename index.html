@@ -778,6 +778,144 @@
             }
         }
 
+        /* Admin Panel Tabs */
+        .admin-tabs {
+            display: flex;
+            background: var(--light);
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: white;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Upload Form */
+        .upload-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--light);
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .upload-instruction {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--radius);
+            display: none;
+        }
+
+        /* Drive Upload */
+        .drive-upload {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .drive-steps {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .drive-steps li {
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-content {
@@ -795,6 +933,10 @@
             
             .floating-books {
                 height: 400px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -845,6 +987,10 @@
             .admin-panel {
                 bottom: 1rem;
                 right: 1rem;
+            }
+            
+            .admin-tabs {
+                flex-direction: column;
             }
         }
 
@@ -918,6 +1064,35 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-dark);
         }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            z-index: 3000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 300px;
+            display: none;
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.warning {
+            background: var(--warning);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -976,7 +1151,7 @@
                 </div>
                 
                 <div class="search-container">
-                    <input type="text" class="search-box" placeholder="Cari judul buku, penulis, atau kata kunci...">
+                    <input type="text" class="search-box" placeholder="Cari judul buku, penulis, atau kata kunci..." oninput="searchBooks(this.value)">
                     <div class="search-icon">🔍</div>
                 </div>
             </div>
@@ -1040,10 +1215,10 @@
             
             <div class="filter-buttons">
                 <button class="filter-btn active" onclick="filterBooks('all')">Semua</button>
-                <button class="filter-btn" onclick="filterBooks('motivation')">Self Motivation</button>
-                <button class="filter-btn" onclick="filterBooks('novel')">Novel</button>
-                <button class="filter-btn" onclick="filterBooks('religion')">Keagamaan</button>
-                <button class="filter-btn" onclick="filterBooks('psychology')">Psikologi</button>
+                <button class="filter-btn" onclick="filterBooks('Self Motivation')">Self Motivation</button>
+                <button class="filter-btn" onclick="filterBooks('Novel Indonesia')">Novel</button>
+                <button class="filter-btn" onclick="filterBooks('Keagamaan')">Keagamaan</button>
+                <button class="filter-btn" onclick="filterBooks('Psikologi')">Psikologi</button>
             </div>
             
             <a href="#all-books" class="view-all">
@@ -1120,7 +1295,7 @@
             
             <div class="footer-section">
                 <h3>Statistik</h3>
-                <p>📚 Total Buku: <strong>856+</strong></p>
+                <p>📚 Total Buku: <strong id="totalBooksCount">0</strong></p>
                 <p>👥 Pengunjung: <strong>12.5K+</strong></p>
                 <p>📖 Bacaan: <strong>256K+</strong></p>
                 <p>⭐ Rating: <strong>4.9/5</strong></p>
@@ -1150,12 +1325,158 @@
     <!-- Admin Modal -->
     <div id="adminModal" class="modal">
         <div class="modal-content">
-            <!-- Modal content will be loaded dynamically -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('stats')">
+                    <span>📊</span>
+                    Statistik
+                </button>
+                <button class="tab-btn" onclick="switchTab('upload')">
+                    <span>📤</span>
+                    Upload Buku
+                </button>
+                <button class="tab-btn" onclick="switchTab('manage')">
+                    <span>📝</span>
+                    Kelola Buku
+                </button>
+            </div>
+            
+            <div id="statsTab" class="tab-content active">
+                <div style="padding: 2rem;">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📊 Statistik Lengkap</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalBooks">0</div>
+                            <div style="color: var(--gray);">Total Buku</div>
+                        </div>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalReads">0</div>
+                            <div style="color: var(--gray);">Total Pembacaan</div>
+                        </div>
+                        <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);" id="statTotalDownloads">0</div>
+                            <div style="color: var(--gray);">Total Unduhan</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 1rem;">📈 Statistik per Kategori</h3>
+                    <div id="categoryStats" style="background: var(--light); padding: 1.5rem; border-radius: var(--radius);">
+                        <!-- Category stats will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="uploadTab" class="tab-content">
+                <div style="padding: 2rem;">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📤 Upload Buku Baru</h2>
+                    
+                    <form id="uploadForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="bookTitle">Judul Buku *</label>
+                            <input type="text" id="bookTitle" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bookAuthor">Penulis *</label>
+                                <input type="text" id="bookAuthor" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookCategory">Kategori *</label>
+                                <select id="bookCategory" class="form-control" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Self Motivation">Self Motivation</option>
+                                    <option value="Novel Indonesia">Novel Indonesia</option>
+                                    <option value="Keagamaan">Keagamaan</option>
+                                    <option value="Psikologi">Psikologi</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="bookDescription">Deskripsi Buku *</label>
+                            <textarea id="bookDescription" class="form-control" required></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bookPages">Jumlah Halaman</label>
+                                <input type="number" id="bookPages" class="form-control" min="1" value="200">
+                            </div>
+                            <div class="form-group">
+                                <label for="bookYear">Tahun Terbit</label>
+                                <input type="number" id="bookYear" class="form-control" min="1900" max="2024" value="2024">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Upload Cover Buku *</label>
+                            <div class="drive-upload">
+                                <h4>📁 Upload dari Google Drive</h4>
+                                <p style="color: var(--gray); margin-bottom: 1rem;">Ikuti langkah berikut untuk upload dari Google Drive:</p>
+                                <ol class="drive-steps">
+                                    <li>Upload gambar ke Google Drive</li>
+                                    <li>Klik kanan file → "Dapatkan link berbagi"</li>
+                                    <li>Ubah izin menjadi "Siapa saja dengan link"</li>
+                                    <li>Copy link dan paste di bawah</li>
+                                </ol>
+                                <input type="url" id="driveLink" class="form-control" 
+                                       placeholder="https://drive.google.com/file/d/.../view?usp=sharing"
+                                       oninput="convertDriveLink(this.value)">
+                                <input type="hidden" id="coverImage" required>
+                                <div id="previewContainer" style="margin-top: 1rem; display: none;">
+                                    <img id="imagePreview" style="max-width: 200px; border-radius: var(--radius);">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Atau Upload File Buku (PDF)</label>
+                            <div class="file-upload-area" onclick="document.getElementById('fileInput').click()" 
+                                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" 
+                                 ondrop="handleDrop(event)">
+                                <div class="upload-icon">📄</div>
+                                <div class="upload-instruction">
+                                    <p>Klik untuk pilih file atau tarik file PDF ke sini</p>
+                                    <p style="font-size: 0.9rem;">Maksimal 10MB</p>
+                                </div>
+                                <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(event)">
+                            </div>
+                            <div id="fileInfo" class="file-info">
+                                <span id="fileName"></span>
+                                <span id="fileSize"></span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                📤 Upload Buku
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetUploadForm()">
+                                🔄 Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="manageTab" class="tab-content">
+                <div style="padding: 2rem;">
+                    <h2 style="margin-bottom: 2rem; color: var(--dark);">📝 Kelola Koleksi Buku</h2>
+                    <div id="booksList">
+                        <!-- Books list will be loaded here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationText"></span>
+    </div>
+
     <script>
-        // Data buku lengkap dengan kategori yang diminta
+        // Data buku lengkap
         const books = [
             {
                 id: 1,
@@ -1168,7 +1489,8 @@
                 description: 'Perubahan kecil yang memberikan hasil luar biasa',
                 pages: 320,
                 year: 2018,
-                downloads: 12345
+                downloads: 12345,
+                dateAdded: '2024-01-15'
             },
             {
                 id: 2,
@@ -1181,7 +1503,8 @@
                 description: 'Kisah inspiratif anak-anak Belitung',
                 pages: 529,
                 year: 2005,
-                downloads: 23456
+                downloads: 23456,
+                dateAdded: '2024-01-10'
             },
             {
                 id: 3,
@@ -1194,7 +1517,8 @@
                 description: 'Transformasi spiritual melalui shalat',
                 pages: 280,
                 year: 2015,
-                downloads: 18900
+                downloads: 18900,
+                dateAdded: '2024-01-05'
             },
             {
                 id: 4,
@@ -1207,72 +1531,41 @@
                 description: 'Dua sistem yang mengendalikan pikiran kita',
                 pages: 499,
                 year: 2011,
-                downloads: 27890
-            },
-            {
-                id: 5,
-                title: 'The 7 Habits of Highly Effective People',
-                author: 'Stephen R. Covey',
-                category: 'Self Motivation',
-                cover: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop',
-                rating: 4.7,
-                reads: 51234,
-                description: 'Prinsip-prinsip efektivitas pribadi',
-                pages: 381,
-                year: 1989,
-                downloads: 34567
-            },
-            {
-                id: 6,
-                title: 'Bumi Manusia',
-                author: 'Pramoedya Ananta Toer',
-                category: 'Novel Indonesia',
-                cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop',
-                rating: 4.9,
-                reads: 42123,
-                description: 'Roman tetralogi buru pertama',
-                pages: 535,
-                year: 1980,
-                downloads: 31234
-            },
-            {
-                id: 7,
-                title: 'Menyucikan Jiwa',
-                author: 'Dr. Aidh al-Qarni',
-                category: 'Keagamaan',
-                cover: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=600&fit=crop',
-                rating: 4.6,
-                reads: 23456,
-                description: 'Konsep tazkiyatun nafs dalam Islam',
-                pages: 320,
-                year: 2003,
-                downloads: 18900
-            },
-            {
-                id: 8,
-                title: 'Man\'s Search for Meaning',
-                author: 'Viktor E. Frankl',
-                category: 'Psikologi',
-                cover: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&h=600&fit=crop',
-                rating: 4.9,
-                reads: 47890,
-                description: 'Pengalaman di kamp konsentrasi Nazi',
-                pages: 200,
-                year: 1946,
-                downloads: 35678
+                downloads: 27890,
+                dateAdded: '2024-01-20'
             }
         ];
 
         // Variabel global
         let currentFilter = 'all';
         let adminPanelOpen = false;
+        let currentTab = 'stats';
+        let selectedFile = null;
 
         // Inisialisasi website
         function init() {
+            loadBooksFromStorage();
             renderBooks();
             setupEventListeners();
             setupScrollAnimation();
             updateVisitorCount();
+            updateStats();
+            renderManageBooks();
+        }
+
+        // Load books from localStorage
+        function loadBooksFromStorage() {
+            const storedBooks = localStorage.getItem('syafi_library_books');
+            if (storedBooks) {
+                const parsedBooks = JSON.parse(storedBooks);
+                books.length = 0;
+                parsedBooks.forEach(book => books.push(book));
+            }
+        }
+
+        // Save books to localStorage
+        function saveBooksToStorage() {
+            localStorage.setItem('syafi_library_books', JSON.stringify(books));
         }
 
         // Render buku ke grid
@@ -1280,17 +1573,92 @@
             const booksGrid = document.getElementById('booksGrid');
             const filteredBooks = currentFilter === 'all' 
                 ? books 
-                : books.filter(book => {
-                    const filters = {
-                        'motivation': 'Self Motivation',
-                        'novel': 'Novel Indonesia',
-                        'religion': 'Keagamaan',
-                        'psychology': 'Psikologi'
-                    };
-                    return book.category === filters[currentFilter];
-                });
+                : books.filter(book => book.category === currentFilter);
+
+            if (filteredBooks.length === 0) {
+                booksGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                        <h3>Tidak ada buku ditemukan</h3>
+                        <p>Coba filter kategori lain atau tambah buku baru</p>
+                    </div>
+                `;
+                return;
+            }
 
             booksGrid.innerHTML = filteredBooks.map(book => `
+                <div class="book-card fade-in">
+                    <div class="book-badge">🔥 ${book.reads.toLocaleString()}x Dibaca</div>
+                    <img src="${book.cover}" alt="${book.title}" class="book-image" 
+                         onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop'">
+                    <div class="book-content">
+                        <span class="book-category">${book.category}</span>
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">oleh ${book.author} • ${book.year}</p>
+                        <p class="book-description">${book.description}</p>
+                        <div class="book-stats">
+                            <div class="rating">
+                                ${'★'.repeat(Math.floor(book.rating))}${'☆'.repeat(5-Math.floor(book.rating))}
+                                <span>${book.rating}</span>
+                            </div>
+                            <div>${book.pages} halaman</div>
+                        </div>
+                        <div class="book-actions">
+                            <button class="btn btn-primary" onclick="readBook(${book.id})">
+                                📖 Baca
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadBook(${book.id})">
+                                ⬇️ Unduh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update total books count
+            document.getElementById('totalBooksCount').textContent = books.length;
+        }
+
+        // Filter buku berdasarkan kategori
+        function filterBooks(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderBooks();
+        }
+
+        // Search books
+        function searchBooks(query) {
+            if (query.length < 2) {
+                renderBooks();
+                return;
+            }
+            
+            const searchResults = books.filter(book => 
+                book.title.toLowerCase().includes(query.toLowerCase()) ||
+                book.author.toLowerCase().includes(query.toLowerCase()) ||
+                book.description.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const booksGrid = document.getElementById('booksGrid');
+            
+            if (searchResults.length === 0) {
+                booksGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <h3>Tidak ditemukan hasil untuk "${query}"</h3>
+                        <p>Coba kata kunci lain</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            booksGrid.innerHTML = searchResults.map(book => `
                 <div class="book-card fade-in">
                     <div class="book-badge">🔥 ${book.reads.toLocaleString()}x Dibaca</div>
                     <img src="${book.cover}" alt="${book.title}" class="book-image">
@@ -1310,8 +1678,8 @@
                             <button class="btn btn-primary" onclick="readBook(${book.id})">
                                 📖 Baca
                             </button>
-                            <button class="btn btn-secondary" onclick="addToFavorites(${book.id})">
-                                ❤️ Favorit
+                            <button class="btn btn-secondary" onclick="downloadBook(${book.id})">
+                                ⬇️ Unduh
                             </button>
                         </div>
                     </div>
@@ -1319,28 +1687,12 @@
             `).join('');
         }
 
-        // Filter buku berdasarkan kategori
-        function filterBooks(filter) {
-            currentFilter = filter;
-            
-            // Update active button
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            renderBooks();
-        }
-
         // Setup event listeners
         function setupEventListeners() {
-            // Search functionality
-            const searchBox = document.querySelector('.search-box');
-            searchBox.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                if (searchTerm.length > 2) {
-                    // Implement search logic here
-                }
+            // Upload form submission
+            document.getElementById('uploadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                uploadBook();
             });
 
             // Mobile menu toggle
@@ -1374,7 +1726,6 @@
 
         // Update visitor count (simulated)
         function updateVisitorCount() {
-            // Simulate increasing visitor count
             const baseCount = 12500;
             const randomIncrement = Math.floor(Math.random() * 100);
             const totalCount = baseCount + randomIncrement;
@@ -1386,13 +1737,47 @@
             });
         }
 
+        // Update statistics
+        function updateStats() {
+            const totalBooks = books.length;
+            const totalReads = books.reduce((sum, book) => sum + book.reads, 0);
+            const totalDownloads = books.reduce((sum, book) => sum + book.downloads, 0);
+            
+            document.getElementById('statTotalBooks').textContent = totalBooks;
+            document.getElementById('statTotalReads').textContent = totalReads.toLocaleString();
+            document.getElementById('statTotalDownloads').textContent = totalDownloads.toLocaleString();
+            
+            // Update category stats
+            const categoryStats = {};
+            books.forEach(book => {
+                if (!categoryStats[book.category]) {
+                    categoryStats[book.category] = { count: 0, reads: 0 };
+                }
+                categoryStats[book.category].count++;
+                categoryStats[book.category].reads += book.reads;
+            });
+            
+            let categoryStatsHTML = '';
+            for (const [category, stats] of Object.entries(categoryStats)) {
+                categoryStatsHTML += `
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-light);">
+                        <span>${category}</span>
+                        <span><strong>${stats.count}</strong> buku • ${stats.reads.toLocaleString()}x dibaca</span>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('categoryStats').innerHTML = categoryStatsHTML;
+        }
+
         // Book actions
         function readBook(bookId) {
             const book = books.find(b => b.id === bookId);
-            book.reads += Math.floor(Math.random() * 100) + 1; // Simulate new reads
+            book.reads += Math.floor(Math.random() * 100) + 1;
+            saveBooksToStorage();
             renderBooks();
+            updateStats();
             
-            // Show notification
             showNotification(`📖 Membaca "${book.title}"`, 'success');
             
             // Simulate reading experience
@@ -1401,55 +1786,31 @@
             }, 500);
         }
 
-        function addToFavorites(bookId) {
+        function downloadBook(bookId) {
             const book = books.find(b => b.id === bookId);
-            showNotification(`❤️ "${book.title}" ditambahkan ke favorit`, 'success');
+            book.downloads += 1;
+            saveBooksToStorage();
+            updateStats();
             
-            // Save to localStorage
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-            if (!favorites.includes(bookId)) {
-                favorites.push(bookId);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
-            }
+            showNotification(`⬇️ Mengunduh "${book.title}"`, 'success');
+            
+            // Simulate download
+            setTimeout(() => {
+                alert(`Buku "${book.title}" berhasil diunduh!\n\nTotal unduhan: ${book.downloads}`);
+            }, 500);
         }
 
         function readFeaturedBook() {
-            const featuredBook = books.find(b => b.id === 1); // Atomic Habits
+            const featuredBook = books.find(b => b.id === 1);
             readBook(1);
         }
 
-        // Admin Panel
+        // Admin Panel functions
         function openAdminPanel() {
             if (!adminPanelOpen) {
-                const modal = document.getElementById('adminModal');
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div style="padding: 2rem;">
-                            <h2 style="margin-bottom: 2rem; color: var(--dark);">📚 Admin Panel</h2>
-                            <div style="background: var(--light); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem;">
-                                <h3 style="margin-bottom: 1rem;">Statistik Lengkap</h3>
-                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                                    <div style="background: white; padding: 1rem; border-radius: var(--radius);">
-                                        <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">
-                                            ${books.reduce((sum, book) => sum + book.reads, 0).toLocaleString()}
-                                        </div>
-                                        <div style="color: var(--gray); font-size: 0.9rem;">Total Pembacaan</div>
-                                    </div>
-                                    <div style="background: white; padding: 1rem; border-radius: var(--radius);">
-                                        <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">
-                                            ${books.length}
-                                        </div>
-                                        <div style="color: var(--gray); font-size: 0.9rem;">Total Buku</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" onclick="closeAdminPanel()" style="width: 100%;">
-                                Tutup Panel
-                            </button>
-                        </div>
-                    </div>
-                `;
-                modal.style.display = 'block';
+                updateStats();
+                renderManageBooks();
+                document.getElementById('adminModal').style.display = 'block';
                 adminPanelOpen = true;
             } else {
                 closeAdminPanel();
@@ -1459,49 +1820,292 @@
         function closeAdminPanel() {
             document.getElementById('adminModal').style.display = 'none';
             adminPanelOpen = false;
+            resetUploadForm();
+        }
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show selected tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Tab').classList.add('active');
+        }
+
+        // Upload functions
+        function convertDriveLink(driveLink) {
+            if (!driveLink.includes('drive.google.com')) return;
+            
+            // Convert Google Drive share link to direct image link
+            const fileId = driveLink.match(/\/d\/(.+?)\//)?.[1] || 
+                          driveLink.match(/id=(.+?)(&|$)/)?.[1];
+            
+            if (fileId) {
+                const directLink = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                document.getElementById('coverImage').value = directLink;
+                
+                // Show preview
+                const preview = document.getElementById('imagePreview');
+                const container = document.getElementById('previewContainer');
+                preview.src = directLink;
+                container.style.display = 'block';
+                
+                showNotification('✅ Link Google Drive berhasil dikonversi', 'success');
+            }
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect({ target: { files } });
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.type !== 'application/pdf') {
+                showNotification('❌ Hanya file PDF yang diizinkan', 'error');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                showNotification('❌ Ukuran file maksimal 10MB', 'error');
+                return;
+            }
+            
+            selectedFile = file;
+            
+            // Show file info
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = ` (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+            document.getElementById('fileInfo').style.display = 'block';
+            
+            showNotification('📄 File siap diupload', 'success');
+        }
+
+        function uploadBook() {
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const category = document.getElementById('bookCategory').value;
+            const description = document.getElementById('bookDescription').value;
+            const pages = parseInt(document.getElementById('bookPages').value);
+            const year = parseInt(document.getElementById('bookYear').value);
+            const cover = document.getElementById('coverImage').value;
+            
+            // Generate new book ID
+            const newId = books.length > 0 ? Math.max(...books.map(b => b.id)) + 1 : 1;
+            
+            const newBook = {
+                id: newId,
+                title,
+                author,
+                category,
+                cover: cover || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop',
+                rating: 4.0 + Math.random() * 0.9, // Random rating 4.0-4.9
+                reads: Math.floor(Math.random() * 1000) + 100,
+                description,
+                pages,
+                year,
+                downloads: Math.floor(Math.random() * 500) + 50,
+                dateAdded: new Date().toISOString().split('T')[0]
+            };
+            
+            books.push(newBook);
+            saveBooksToStorage();
+            renderBooks();
+            updateStats();
+            renderManageBooks();
+            
+            showNotification(`✅ Buku "${title}" berhasil ditambahkan!`, 'success');
+            
+            // Reset form
+            resetUploadForm();
+            
+            // Switch to manage tab
+            switchTab('manage');
+        }
+
+        function resetUploadForm() {
+            document.getElementById('uploadForm').reset();
+            document.getElementById('coverImage').value = '';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('fileInfo').style.display = 'none';
+            selectedFile = null;
+        }
+
+        // Manage books functions
+        function renderManageBooks() {
+            const booksList = document.getElementById('booksList');
+            
+            if (books.length === 0) {
+                booksList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                        <h3>Belum ada buku</h3>
+                        <p>Mulai tambah buku dengan klik tab Upload Buku</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            booksList.innerHTML = books.map(book => `
+                <div style="background: var(--light); padding: 1rem; border-radius: var(--radius); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+                    <img src="${book.cover}" alt="${book.title}" style="width: 60px; height: 80px; object-fit: cover; border-radius: 6px;">
+                    <div style="flex: 1;">
+                        <h4 style="margin-bottom: 0.25rem;">${book.title}</h4>
+                        <p style="color: var(--gray); font-size: 0.9rem; margin-bottom: 0.25rem;">${book.author} • ${book.category}</p>
+                        <p style="color: var(--gray); font-size: 0.8rem;">Ditambahkan: ${book.dateAdded} • Dibaca: ${book.reads.toLocaleString()}x</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="editBook(${book.id})" style="background: var(--warning); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="deleteBook(${book.id})" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editBook(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+            
+            // Fill form with book data
+            document.getElementById('bookTitle').value = book.title;
+            document.getElementById('bookAuthor').value = book.author;
+            document.getElementById('bookCategory').value = book.category;
+            document.getElementById('bookDescription').value = book.description;
+            document.getElementById('bookPages').value = book.pages;
+            document.getElementById('bookYear').value = book.year;
+            document.getElementById('coverImage').value = book.cover;
+            
+            // Show preview
+            const preview = document.getElementById('imagePreview');
+            const container = document.getElementById('previewContainer');
+            preview.src = book.cover;
+            container.style.display = 'block';
+            
+            // Switch to upload tab
+            switchTab('upload');
+            
+            // Change form to edit mode
+            const form = document.getElementById('uploadForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                updateBook(bookId);
+            };
+            
+            // Change button text
+            form.querySelector('button[type="submit"]').innerHTML = '💾 Update Buku';
+            
+            showNotification(`✏️ Mengedit buku "${book.title}"`, 'warning');
+        }
+
+        function updateBook(bookId) {
+            const bookIndex = books.findIndex(b => b.id === bookId);
+            if (bookIndex === -1) return;
+            
+            const title = document.getElementById('bookTitle').value;
+            const author = document.getElementById('bookAuthor').value;
+            const category = document.getElementById('bookCategory').value;
+            const description = document.getElementById('bookDescription').value;
+            const pages = parseInt(document.getElementById('bookPages').value);
+            const year = parseInt(document.getElementById('bookYear').value);
+            const cover = document.getElementById('coverImage').value;
+            
+            books[bookIndex] = {
+                ...books[bookIndex],
+                title,
+                author,
+                category,
+                description,
+                pages,
+                year,
+                cover: cover || books[bookIndex].cover
+            };
+            
+            saveBooksToStorage();
+            renderBooks();
+            updateStats();
+            renderManageBooks();
+            
+            showNotification(`✅ Buku "${title}" berhasil diperbarui!`, 'success');
+            
+            // Reset form
+            resetUploadForm();
+            
+            // Restore form to upload mode
+            const form = document.getElementById('uploadForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                uploadBook();
+            };
+            form.querySelector('button[type="submit"]').innerHTML = '📤 Upload Buku';
+            
+            // Switch to manage tab
+            switchTab('manage');
+        }
+
+        function deleteBook(bookId) {
+            if (!confirm('Apakah Anda yakin ingin menghapus buku ini?')) return;
+            
+            const bookIndex = books.findIndex(b => b.id === bookId);
+            if (bookIndex === -1) return;
+            
+            const deletedBook = books[bookIndex];
+            books.splice(bookIndex, 1);
+            saveBooksToStorage();
+            renderBooks();
+            updateStats();
+            renderManageBooks();
+            
+            showNotification(`🗑️ Buku "${deletedBook.title}" telah dihapus`, 'warning');
         }
 
         // Notification system
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: ${type === 'success' ? 'var(--success)' : 'var(--primary)'};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: var(--radius);
-                box-shadow: var(--shadow-lg);
-                z-index: 3000;
-                animation: slideInRight 0.3s ease-out;
-                max-width: 300px;
-            `;
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
             
-            notification.innerHTML = message;
-            document.body.appendChild(notification);
+            notificationText.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
             
-            // Remove after 3 seconds
             setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease-out';
-                setTimeout(() => notification.remove(), 300);
+                notification.style.display = 'none';
             }, 3000);
         }
 
-        // Add animation styles
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('adminModal');
+            if (event.target === modal) {
+                closeAdminPanel();
             }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        };
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', init);
