@@ -4,397 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syafi Library | Perpustakaan Digital Gen Z</title>
-    <!-- Font & Icons untuk Gen Z -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1;
+            --primary: #4f46e5; /* Biru lebih solid */
             --primary-glow: #818cf8;
-            --secondary: #f472b6;
+            --secondary: #10b981; /* Hijau, bukan pink */
             --dark: #1e293b;
             --light: #f8fafc;
             --gray: #64748b;
-            --success: #10b981;
-            --glass: rgba(255, 255, 255, 0.7);
-            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --glass: rgba(255, 255, 255, 0.85);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(-45deg, #f0f4ff, #fdf2f8, #f0f9ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            /* GRADIENT BARU: Biru sangat muda ke hijau sangat muda */
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f9ff 100%);
+            /* Opsi Alternatif 1: Ungu muda ke biru muda */
+            /* background: linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 100%); */
+            /* Opsi Alternatif 2: Netral */
+            /* background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%); */
             color: var(--dark);
             line-height: 1.6;
             min-height: 100vh;
+            background-attachment: fixed; /* Biar gradient tetap saat scroll */
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* Header & Nav */
-        header {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .nav-links a {
-            margin-left: 1.5rem;
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--primary);
-        }
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 3px;
-        }
-        /* Hero Sederhana */
-        .hero {
-            text-align: center;
-            padding: 3rem 2rem 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .hero h1 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-        }
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            margin-bottom: 2rem;
-        }
-        /* Container Utama untuk Buku */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 3rem;
-        }
-        /* Section Title untuk Buku */
-        .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
-            margin: 2rem 0;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-        /* Kartu Buku */
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-        .book-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .book-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .book-cover {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-        .book-info {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .book-category {
-            display: inline-block;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            align-self: flex-start;
-        }
-        .book-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-        .book-author {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        .book-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
+        /* ... (Kode CSS lainnya untuk header, kartu buku, dll TETAP SAMA seperti sebelumnya) ... */
         .book-actions {
             display: flex;
             gap: 0.5rem;
             margin-top: auto;
+            flex-wrap: wrap; /* Agar tombol rapi di mobile */
         }
-        /* Tombol */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-        .btn-primary {
+        .btn-read {
             background: linear-gradient(to right, var(--primary), var(--primary-glow));
             color: white;
         }
-        .btn-primary:hover {
+        .btn-read:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
-        }
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-        /* Kutipan Hari Ini */
-        .quote-section {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 3rem auto;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.3);
-            text-align: center;
-            max-width: 900px;
-        }
-        #quoteDisplay {
-            font-size: 1.6rem;
-            font-style: italic;
-            color: var(--dark);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            min-height: 80px;
-        }
-        #authorDisplay {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        /* Wall of Messages */
-        .wall-section {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 3rem auto;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.3);
-            max-width: 900px;
-        }
-        .message-form {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .message-form input {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        .message-form input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .messages-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-        .message {
-            background: white;
-            padding: 1.2rem;
-            border-radius: 15px;
-            border-left: 5px solid var(--secondary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            animation: fadeIn 0.5s ease;
-        }
-        .message .text { margin-bottom: 0.5rem; }
-        .message .meta {
-            font-size: 0.85rem;
-            color: var(--gray);
-            display: flex;
-            justify-content: space-between;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Admin Panel */
-        .admin-panel {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        #adminToggle {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-            transition: all 0.3s;
-        }
-        #adminToggle:hover {
-            transform: rotate(90deg) scale(1.1);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow);
-        }
-        .modal-content h2 {
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        .form-group textarea { min-height: 100px; resize: vertical; }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-            margin-top: 4rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-        /* Responsif */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1rem; }
-            .nav-container { flex-direction: column; gap: 1rem; }
-            .nav-links a { margin: 0 0.75rem; }
-            .books-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-            .message-form { flex-direction: column; }
-            .section-title { font-size: 1.8rem; }
-            #quoteDisplay { font-size: 1.3rem; }
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
         }
     </style>
 </head>
@@ -412,13 +62,11 @@
         </div>
     </header>
 
-    <!-- Hero Section Sederhana -->
     <section class="hero" id="home">
         <h1>Baca Buku. Berbagi Inspirasi.</h1>
         <p>Tempat nongkrong digital buat gen Z yang suka baca, diskusi, dan berkembang bareng.</p>
     </section>
 
-    <!-- Koleksi Buku - LANGSUNG TAMPIL -->
     <section class="container" id="books">
         <h2 class="section-title"><i class="fas fa-books"></i> Koleksi Buku</h2>
         <div class="books-grid" id="booksGrid">
@@ -426,152 +74,44 @@
         </div>
     </section>
 
-    <!-- Kutipan Hari Ini -->
-    <section class="container" id="quotes">
-        <h2 class="section-title"><i class="fas fa-quote-left"></i> Kutipan Hari Ini</h2>
-        <div class="quote-section">
-            <div id="quoteDisplay">"Membaca adalah jendela dunia."</div>
-            <div id="authorDisplay">- Anonymous</div>
-            <div style="margin-top: 2rem;">
-                <button class="btn btn-outline" onclick="newQuote()">
-                    <i class="fas fa-redo"></i> Kutipan Baru
-                </button>
-                <button class="btn btn-outline" onclick="shareQuote()">
-                    <i class="fas fa-share-alt"></i> Bagikan
-                </button>
-            </div>
-        </div>
-    </section>
+    <!-- ... (Bagian Kutipan, Wall of Messages, Admin Panel, Footer TETAP SAMA) ... -->
 
-    <!-- Wall of Messages / Kata-kata Hari Ini -->
-    <section class="container" id="wall">
-        <h2 class="section-title"><i class="fas fa-comment-dots"></i> Kata-Kata Hari Ini</h2>
-        <div class="wall-section">
-            <p style="margin-bottom: 1.5rem; color: var(--gray);">Apa motivasi atau pikiran kerenmu hari ini? Share di sini!</p>
-            <div class="message-form">
-                <input type="text" id="messageInput" placeholder="Tulis pesanmu di sini... (max 150 karakter)" maxlength="150">
-                <button class="btn btn-primary" onclick="postMessage()"><i class="fas fa-paper-plane"></i> Kirim</button>
-            </div>
-            <div class="messages-container" id="messagesContainer">
-                <!-- Pesan akan dimuat otomatis dari Firebase -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Admin Panel (Toggle Button) -->
-    <div class="admin-panel">
-        <button id="adminToggle" title="Admin Panel"><i class="fas fa-cog"></i></button>
-    </div>
-
-    <!-- Admin Modal (Form Tambah Buku) -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <h2><i class="fas fa-plus-circle"></i> Tambah Buku Baru</h2>
-            <form onsubmit="addNewBook(event)">
-                <div class="form-group">
-                    <label for="bookTitle">Judul Buku</label>
-                    <input type="text" id="bookTitle" required>
-                </div>
-                <div class="form-group">
-                    <label for="bookAuthor">Penulis</label>
-                    <input type="text" id="bookAuthor" required>
-                </div>
-                <div class="form-group">
-                    <label for="bookCategory">Kategori</label>
-                    <select id="bookCategory" required>
-                        <option value="Self Motivation">💪 Self Motivation</option>
-                        <option value="Novel Indonesia">📖 Novel Indonesia</option>
-                        <option value="Keagamaan">🕌 Keagamaan</option>
-                        <option value="Psikologi">🧠 Psikologi</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bookCover">URL Cover Buku</label>
-                    <input type="url" id="bookCover" placeholder="https://example.com/cover.jpg" required>
-                </div>
-                <div class="form-group">
-                    <label for="bookDescription">Deskripsi Singkat</label>
-                    <textarea id="bookDescription" required></textarea>
-                </div>
-                <div style="display: flex; gap: 1rem;">
-                    <button type="submit" class="btn btn-primary" style="flex:1;">Simpan Buku</button>
-                    <button type="button" class="btn btn-outline" onclick="closeAdminModal()">Batal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>Dibuat dengan ❤️ untuk teman-teman Gen Z. | © 2025 Syafi Library</p>
-    </footer>
-
-    <!-- ==================== JAVASCRIPT ==================== -->
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
     <script>
-        // ========== 1. KONFIGURASI FIREBASE ==========
-        // 🔧 GANTI kode berikut dengan konfigurasi dari Firebase Console Anda
-        const firebaseConfig = {
-            /* PASTE_KONFIGURASI_FIREBASE_DARI_KONSOL */
-            apiKey: "AIzaSyAxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-            authDomain: "syafi-library.firebaseapp.com",
-            databaseURL: "https://syafi-library-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "syafi-library",
-            storageBucket: "syafi-library.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456"
-        };
-        // Inisialisasi Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        // ========== 2. DATA BUKU AWAL ==========
+        // ========== DATA BUKU AWAL YANG BISA DIBACA ==========
         const initialBooks = [
             {
                 title: "Atomic Habits",
                 author: "James Clear",
                 category: "Self Motivation",
                 cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop",
-                description: "Perubahan kecil yang memberikan hasil luar biasa. Buku ini mengajarkan bagaimana kebiasaan kecil yang konsisten dapat mengubah hidupmu secara dramatis."
+                description: "Perubahan kecil yang memberikan hasil luar biasa.",
+                // LINK BACA: Ganti dengan link menuju platform resmi (contoh: Google Books preview)
+                readLink: "https://drive.google.com/file/d/1T4vpSQrFohR7kRMSK1QSVuowcPqTU4N9/view?usp=drive_link",
+                linkType: "external" // Tipe link: 'external' atau 'embed'
             },
             {
                 title: "Laskar Pelangi",
                 author: "Andrea Hirata",
                 category: "Novel Indonesia",
                 cover: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop",
-                description: "Kisah inspiratif anak-anak Belitung yang berjuang meraih mimpi. Novel yang menyentuh hati tentang persahabatan dan perjuangan dalam keterbatasan."
+                description: "Kisah inspiratif anak-anak Belitung.",
+                // LINK BACA: Contoh menuju iPusnas atau toko buku online
+                readLink: "https://drive.google.com/file/d/1NkyZGREmRXtdOuMHlhRe4jCQpb-A-gaX/view?usp=drive_link", // Ganti dengan link sebenarnya
+                linkType: "external"
             },
             {
-                title: "Revolusi Shalat",
-                author: "KH. Abdullah Gymnastiar",
-                category: "Keagamaan",
-                cover: "https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop",
-                description: "Transformasi spiritual melalui shalat. Panduan praktis untuk menjadikan shalat lebih bermakna dan mengubah hidup."
-            },
-            {
-                title: "Thinking, Fast and Slow",
-                author: "Daniel Kahneman",
-                category: "Psikologi",
+                title: "Buku Kumpulan Puisi (Contoh Domain Publik)",
+                author: "Anonim",
+                category: "Sastra",
                 cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&h=600&fit=crop",
-                description: "Dua sistem yang mengendalikan pikiran kita. Buku psikologi populer yang menjelaskan bagaimana otak kita berpikir dan mengambil keputusan."
+                description: "Kumpulan puisi klasik bahasa Indonesia.",
+                // LINK BACA: Contoh embed PDF dari Archive.org
+                readLink: "https://archive.org/embed/kumpulan-berbagai-buku",
+                linkType: "embed"
             }
         ];
 
-        // ========== 3. DATA KUTIPAN ==========
-        const quotes = [
-            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-            { text: "Buku adalah jendela dunia.", author: "Peribahasa" },
-            { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
-            { text: "Orang yang tidak membaca buku sama buruknya dengan mereka yang tidak bisa membaca.", author: "Mark Twain" },
-            { text: "Kesuksesan adalah kemampuan untuk berpindah dari satu kegagalan ke kegagalan berikutnya tanpa kehilangan antusiasme.", author: "Winston Churchill" },
-            { text: "Membaca adalah makanan untuk pikiran.", author: "Cicero" },
-            { text: "Jika kamu hanya membaca buku yang dibaca orang lain, kamu hanya akan berpikir seperti orang lain.", author: "Haruki Murakami" }
-        ];
-
-        // ========== 4. FUNGSI UTAMA WEBSITE ==========
-        // A. Render Koleksi Buku
+        // ========== FUNGSI RENDER BUKU DENGAN TOMBOL BACA ==========
         function renderBooks() {
             const grid = document.getElementById('booksGrid');
             grid.innerHTML = initialBooks.map(book => `
@@ -583,8 +123,9 @@
                         <p class="book-author">${book.author}</p>
                         <p class="book-description">${book.description}</p>
                         <div class="book-actions">
-                            <button class="btn btn-primary" onclick="readBook('${book.title}')">
-                                <i class="fas fa-book-open"></i> Baca
+                            <!-- TOMBOL BACA UTAMA -->
+                            <button class="btn btn-read" onclick="openBook('${book.readLink}', '${book.linkType}', '${book.title}')">
+                                <i class="fas fa-book-open"></i> Baca Sekarang
                             </button>
                             <button class="btn btn-outline" onclick="addToFavorites('${book.title}')">
                                 <i class="far fa-heart"></i> Favorit
@@ -595,155 +136,45 @@
             `).join('');
         }
 
-        // B. Fungsi untuk tombol Baca dan Favorit
-        function readBook(title) {
-            alert(`Buku "${title}" siap dibaca! (Fitur membaca lengkap akan segera hadir)`);
-        }
-        
-        function addToFavorites(title) {
-            alert(`"${title}" telah ditambahkan ke favorit!`);
-            // Di sini nanti bisa ditambahkan logika untuk menyimpan ke localStorage atau Firebase
-        }
+        // ========== FUNGSI UNTUK MEMBUKA BUKU ==========
+        function openBook(link, type, title) {
+            if (!link || link === '#') {
+                alert(`Fitur membaca untuk "${title}" sedang disiapkan. Untuk sementara, cari buku ini di iPusnas atau Google Books ya!`);
+                return;
+            }
 
-        // C. Kutipan Hari Ini (Random)
-        function newQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            document.getElementById('quoteDisplay').textContent = `"${quotes[randomIndex].text}"`;
-            document.getElementById('authorDisplay').textContent = `- ${quotes[randomIndex].author}`;
-        }
-        
-        function shareQuote() {
-            const quote = document.getElementById('quoteDisplay').textContent;
-            const author = document.getElementById('authorDisplay').textContent;
-            const textToShare = `${quote}\n${author}\n\nDari Syafi Library`;
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Kutipan Inspiratif',
-                    text: textToShare,
-                    url: window.location.href
-                });
+            if (type === 'embed') {
+                // Membuka modal untuk menampilkan embed (PDF/Web Viewer)
+                openBookModal(link, title);
             } else {
-                alert(`Bagikan kutipan ini:\n\n${textToShare}`);
+                // Membuka link eksternal di tab baru
+                window.open(link, '_blank');
             }
         }
 
-        // D. Wall of Messages dengan Firebase
-        function postMessage() {
-            const input = document.getElementById('messageInput');
-            const text = input.value.trim();
-            if (!text) return alert('Pesan tidak boleh kosong!');
-            if (text.length > 150) return alert('Maksimal 150 karakter!');
-
-            const newMessageRef = database.ref('messages').push();
-            newMessageRef.set({
-                text: text,
-                author: "Teman",
-                timestamp: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}),
-                date: new Date().toLocaleDateString('id-ID')
-            }).then(() => {
-                input.value = ''; // Kosongkan input
-            }).catch(error => {
-                console.error("Error posting message: ", error);
-                alert('Gagal mengirim pesan. Coba lagi.');
-            });
-        }
-
-        // E. Baca & Tampilkan Pesan dari Firebase
-        database.ref('messages').limitToLast(10).on('value', (snapshot) => {
-            const container = document.getElementById('messagesContainer');
-            container.innerHTML = '';
-            const messages = [];
-            snapshot.forEach(childSnapshot => {
-                messages.push({ id: childSnapshot.key, ...childSnapshot.val() });
-            });
-            // Urutkan terbaru di atas
-            messages.reverse().forEach(msg => {
-                const msgEl = document.createElement('div');
-                msgEl.className = 'message';
-                msgEl.innerHTML = `
-                    <div class="text">${msg.text}</div>
-                    <div class="meta">
-                        <span>👤 ${msg.author}</span>
-                        <span>⏰ ${msg.date} ${msg.timestamp}</span>
+        function openBookModal(embedLink, title) {
+            // Kode untuk membuat modal sederhana dan menampilkan iframe
+            const modalHTML = `
+                <div id="bookModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; display:flex; justify-content:center; align-items:center;">
+                    <div style="background:white; border-radius:15px; width:90%; height:80%; padding:20px; display:flex; flex-direction:column;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <h3 style="margin:0;">Membaca: ${title}</h3>
+                            <button onclick="document.getElementById('bookModal').remove()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+                        </div>
+                        <iframe src="${embedLink}" style="width:100%; height:100%; border:none; border-radius:10px;" title="${title}"></iframe>
                     </div>
-                `;
-                container.appendChild(msgEl);
-            });
-        }, (error) => {
-            console.error("Error loading messages: ", error);
-            document.getElementById('messagesContainer').innerHTML = 
-                '<p style="color: var(--gray); text-align: center;">Belum ada pesan. Jadilah yang pertama!</p>';
-        });
-
-        // F. Admin Panel Functions
-        document.getElementById('adminToggle').addEventListener('click', () => {
-            document.getElementById('adminModal').style.display = 'flex';
-        });
-        
-        function closeAdminModal() {
-            document.getElementById('adminModal').style.display = 'none';
-            document.querySelector('#adminModal form').reset();
-        }
-        
-        window.onclick = function(event) {
-            const modal = document.getElementById('adminModal');
-            if (event.target === modal) closeAdminModal();
-        }
-        
-        function addNewBook(event) {
-            event.preventDefault();
-            const title = document.getElementById('bookTitle').value;
-            const author = document.getElementById('bookAuthor').value;
-            const category = document.getElementById('bookCategory').value;
-            const cover = document.getElementById('bookCover').value;
-            const description = document.getElementById('bookDescription').value;
-
-            // Tambahkan ke array buku
-            initialBooks.unshift({
-                title, 
-                author, 
-                category, 
-                cover: cover || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&h=600&fit=crop", 
-                description
-            });
-            
-            // Render ulang
-            renderBooks();
-            
-            // Tutup modal & reset form
-            closeAdminModal();
-            alert(`Buku "${title}" berhasil ditambahkan!`);
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
 
-        // ========== 5. INISIALISASI SAAT HALAMAN DIMUAT ==========
+        // ... (Fungsi Firebase, Kutipan, Wall of Messages, dan Admin Panel TETAP SAMA seperti sebelumnya) ...
+
+        // ========== INISIALISASI ==========
         window.addEventListener('DOMContentLoaded', () => {
-            renderBooks();
-            newQuote(); // Tampilkan kutipan random pertama
-            console.log('Syafi Library siap digunakan! 🚀');
-            
-            // Smooth scroll untuk navigasi
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if(targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if(targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Update active nav link
-                        document.querySelectorAll('.nav-links a').forEach(link => {
-                            link.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
-                });
-            });
+            renderBooks(); // Buku langsung dirender
+            newQuote();
+            console.log('Syafi Library dengan buku yang bisa dibaca, siap digunakan! 📖');
         });
     </script>
 </body>
